@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Built-By: psor
-Build-Jdk: 1.6.0_17
-Created-By: Maven Integration for Eclipse
-
