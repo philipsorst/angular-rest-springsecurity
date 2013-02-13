@@ -39,5 +39,8 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="net.dontdrinkandroot.example.angularrestspringsecurity.rest" />
+	
+	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.NewsEntryDaoImpl">
+	</bean>
 
 </beans>

@@ -1,15 +1,18 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-public class NewsEntry {
+@XmlRootElement
+public class NewsEntry implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -20,6 +23,25 @@ public class NewsEntry {
 
 	@Column
 	private String content;
+
+
+	public NewsEntry() {
+
+		this.date = new Date();
+	}
+
+
+	public Long getId() {
+
+		return this.id;
+	}
+
+
+	// TODO: remove
+	public void setId(Long id) {
+
+		this.id = id;
+	}
 
 
 	public Date getDate() {
