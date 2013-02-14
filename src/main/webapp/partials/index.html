@@ -1,0 +1,8 @@
+<div class="page-header">
+	<h2>News</h2>
+</div>
+
+<div ng-repeat="newsEntry in newsEntries">
+	<h3>{{newsEntry.date | date:'medium'}}</h3>
+	<p>{{newsEntry.content}}</p>
+</div>
