@@ -7,11 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-@XmlRootElement
 public class NewsEntry implements Serializable {
 
 	@Id
@@ -34,13 +32,6 @@ public class NewsEntry implements Serializable {
 	public Long getId() {
 
 		return this.id;
-	}
-
-
-	// TODO: remove
-	public void setId(Long id) {
-
-		this.id = id;
 	}
 
 

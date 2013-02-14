@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
 
@@ -37,7 +38,9 @@ public class NewsEntryDaoImpl implements NewsEntryDao {
 
 		final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
 		final CriteriaQuery<NewsEntry> criteriaQuery = builder.createQuery(NewsEntry.class);
-		criteriaQuery.from(NewsEntry.class);
+
+		Root<NewsEntry> root = criteriaQuery.from(NewsEntry.class);
+		criteriaQuery.orderBy(builder.desc(root.get("date")));
 
 		TypedQuery<NewsEntry> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
 		return typedQuery.getResultList();
@@ -74,6 +77,6 @@ public class NewsEntryDaoImpl implements NewsEntryDao {
 		}
 
 		this.getEntityManager().remove(newsEntry);
-
 	}
+
 }

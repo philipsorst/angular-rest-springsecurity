@@ -26,7 +26,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true" />
-				<property name="showSql" value="false" />
+				<property name="showSql" value="true" />
 			</bean>
 		</property>
 	</bean>
@@ -41,6 +41,10 @@
 	<context:component-scan base-package="net.dontdrinkandroot.example.angularrestspringsecurity.rest" />
 	
 	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.NewsEntryDaoImpl">
+	</bean>
+	
+	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
+		<constructor-arg ref="newsEntryDao" />
 	</bean>
 
 </beans>

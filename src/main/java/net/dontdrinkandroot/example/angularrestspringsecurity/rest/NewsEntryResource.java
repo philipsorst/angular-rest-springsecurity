@@ -1,5 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,6 +23,15 @@ public class NewsEntryResource {
 
 	@Autowired
 	private NewsEntryDao newsEntryDao;
+
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<NewsEntry> getAll() {
+
+		List<NewsEntry> allEntries = this.newsEntryDao.findAll();
+		return allEntries;
+	}
 
 
 	@GET
