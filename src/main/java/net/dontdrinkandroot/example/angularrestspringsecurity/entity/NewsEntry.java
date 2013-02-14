@@ -58,4 +58,11 @@ public class NewsEntry implements Serializable {
 		this.content = content;
 	}
 
+
+	@Override
+	public String toString() {
+
+		return String.format("NewsEntry[%d, %s]", this.id, this.content);
+	}
+
 }

@@ -1,8 +1,15 @@
-<div class="page-header">
-	<h2>News</h2>
+<div style="float: right">
+	<a href="#!/create" class="btn"><i class="icon-plus"></i> Create</a>
 </div>
+<h3>News</h3>
 
 <div ng-repeat="newsEntry in newsEntries">
-	<h3>{{newsEntry.date | date:'medium'}}</h3>
+	<hr />
+	<div style="float: right">
+		<a ng-click="deleteEntry(newsEntry.id)" class="btn btn-mini"><i class="icon-remove"></i></a>
+		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-mini"><i class="icon-pencil"></i></a>
+	</div>
+	<h4>{{newsEntry.date | date}}</h4>
 	<p>{{newsEntry.content}}</p>
 </div>
+<hr />
