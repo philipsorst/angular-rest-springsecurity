@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Rest SpringSecurity Example</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+	
+		<div class="page-header">
+			<h2>Login</h2>
+		</div>
+	
+		<form action="j_spring_security_check" method="POST" class="form-horizontal">
+			<div class="control-group">
+				<label for="username" class="control-label">User Name:</label>
+				<div class="controls">
+					<input id="username" name="j_username" type="text" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="password" class="control-label">Password:</label>
+				<div class="controls">
+					<input id="password" name="j_password" type="password" />
+				</div>
+			</div>
+			<div class="form-actions">
+				<input type="submit" value="Log In" class="btn btn-primary"/>
+			</div>
+		</form>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

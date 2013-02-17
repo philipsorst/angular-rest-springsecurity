@@ -57,13 +57,16 @@
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
+    
+    <bean id="forbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
 
-    <security:http create-session="stateless" use-expressions="true" >
+    <security:http use-expressions="true" entry-point-ref="forbiddenEntryPoint">
         <security:intercept-url method="GET" pattern="/rest/news/**" access="hasRole('user')" />
         <security:intercept-url method="PUT" pattern="/rest/news/**" access="hasRole('admin')" />
         <security:intercept-url method="POST" pattern="/rest/news/**" access="hasRole('admin')" />
         <security:intercept-url method="DELETE" pattern="/rest/news/**" access="hasRole('admin')" />
-        <security:http-basic />
+        <security:form-login login-page="/login.html" default-target-url="/#!/loggedin/" always-use-default-target="true"/>
+        <security:logout logout-url="/logout.html" />
     </security:http>
 
 </beans>
