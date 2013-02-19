@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
+
+import org.codehaus.jackson.map.annotate.JsonView;
+
 
 @Entity
 public class NewsEntry implements Serializable {
@@ -29,12 +33,14 @@ public class NewsEntry implements Serializable {
 	}
 
 
+	@JsonView(JsonViews.Admin.class)
 	public Long getId() {
 
 		return this.id;
 	}
 
 
+	@JsonView(JsonViews.User.class)
 	public Date getDate() {
 
 		return this.date;
@@ -47,6 +53,7 @@ public class NewsEntry implements Serializable {
 	}
 
 
+	@JsonView(JsonViews.User.class)
 	public String getContent() {
 
 		return this.content;

@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest;
 
-import java.util.Collection;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -14,12 +14,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.NewsEntryDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 
@@ -32,15 +41,35 @@ public class NewsEntryResource {
 	@Autowired
 	private NewsEntryDao newsEntryDao;
 
+	@Autowired
+	private ObjectMapper mapper;
+
+
+	// @GET
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public Collection<NewsEntry> list() {
+	//
+	// this.logger.info("list()");
+	//
+	// List<NewsEntry> allEntries = this.newsEntryDao.findAll();
+	// return allEntries;
+	// }
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<NewsEntry> list() {
+	public String list() throws JsonGenerationException, JsonMappingException, IOException {
 
 		this.logger.info("list()");
 
+		ObjectWriter viewWriter;
+		if (this.isAdmin()) {
+			viewWriter = this.mapper.writerWithView(JsonViews.Admin.class);
+		} else {
+			viewWriter = this.mapper.writerWithView(JsonViews.User.class);
+		}
 		List<NewsEntry> allEntries = this.newsEntryDao.findAll();
-		return allEntries;
+
+		return viewWriter.writeValueAsString(allEntries);
 	}
 
 
@@ -89,6 +118,25 @@ public class NewsEntryResource {
 		this.logger.info("deleteEntry(id)");
 
 		this.newsEntryDao.delete(id);
+	}
+
+
+	private boolean isAdmin() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
+			return false;
+		}
+		UserDetails userDetails = (UserDetails) principal;
+
+		for (GrantedAuthority authority : userDetails.getAuthorities()) {
+			if (authority.toString().equals("admin")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

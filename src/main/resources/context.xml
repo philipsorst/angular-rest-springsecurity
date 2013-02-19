@@ -68,5 +68,7 @@
         <security:form-login login-page="/login.html" default-target-url="/#!/loggedin/" always-use-default-target="true"/>
         <security:logout logout-url="/logout.html" />
     </security:http>
+    
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper"/>
 
 </beans>
