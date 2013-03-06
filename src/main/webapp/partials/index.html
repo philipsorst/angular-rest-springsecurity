@@ -6,7 +6,7 @@
 <div ng-repeat="newsEntry in newsEntries">
 	<hr />
 	<div style="float: right">
-		<a ng-click="deleteEntry(newsEntry.id)" class="btn btn-mini" ng-show="hasRole('admin')"><i class="icon-remove"></i></a>
+		<a ng-click="deleteEntry(newsEntry)" class="btn btn-mini" ng-show="hasRole('admin')"><i class="icon-remove"></i></a>
 		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-mini" ng-show="hasRole('admin')"><i class="icon-pencil"></i></a>
 	</div>
 	<h4>{{newsEntry.date | date}}</h4>

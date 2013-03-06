@@ -1,6 +1,6 @@
 angular.module('exampleApp', ['exampleApp.services'])
 	.config(
-		[ '$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+		[ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 			
 			$routeProvider.when('/loggedin', {
 				templateUrl: 'partials/loggedin.html',
@@ -23,6 +23,35 @@ angular.module('exampleApp', ['exampleApp.services'])
 			});
 			
 			$locationProvider.hashPrefix('!');
+			
+			/* Intercept http errors */
+			var interceptor = function ($rootScope, $q, $window) {
+
+		        function success(response) {
+		            return response;
+		        }
+
+		        function error(response) {
+		        	
+		            var status = response.status;
+		            var config = response.config;
+		            var method = config.method;
+		            var url = config.url;
+
+		            if (status == 401 || status == 403) {
+		            	$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login.html";
+		            } else {
+		            	$rootScope.error = method + " on " + url + " failed with status " + status;
+		            }
+		            
+		            return $q.reject(response);
+		        }
+
+		        return function (promise) {
+		            return promise.then(success, error);
+		        };
+		    };
+		    $httpProvider.responseInterceptors.push(interceptor);
 		} ]
 	).run(function($rootScope, $location, LoginService) {
 		
@@ -61,27 +90,21 @@ function LoginController($rootScope, $location, LoginService) {
 
 function IndexController($scope, NewsService) {
 	
-	NewsService.getAll(function(newsEntries) {
-		$scope.newsEntries = newsEntries;	
-	});
+	$scope.newsEntries = NewsService.query();
 	
-	$scope.deleteEntry = function(id) {
-		NewsService.deleteEntry(id, function() {
-			NewsService.getAll(function(newsEntries) {
-				$scope.newsEntries = newsEntries;	
-			});	
+	$scope.deleteEntry = function(newsEntry) {
+		newsEntry.$remove(function() {
+			$scope.newsEntries = NewsService.query();
 		});
 	};
 };
 
 function EditController($scope, $routeParams, $location, NewsService) {
 
-	NewsService.getEntry($routeParams.id, function(newsEntry) {
-		$scope.newsEntry = newsEntry;
-	});
+	$scope.newsEntry = NewsService.get({id: $routeParams.id});
 	
 	$scope.save = function() {
-		NewsService.saveEntry($scope.newsEntry, function(updatedEntry) {
+		$scope.newsEntry.$save(function() {
 			$location.path('#!/');
 		});
 	};
@@ -89,11 +112,10 @@ function EditController($scope, $routeParams, $location, NewsService) {
 
 function CreateController($scope, $location, NewsService) {
 	
-	$scope.newsEntry = {
-	};
+	$scope.newsEntry = new NewsService();
 	
 	$scope.save = function() {
-		NewsService.createEntry($scope.newsEntry, function(createdEntry) {
+		$scope.newsEntry.$save(function() {
 			$location.path('#!/');
 		});
 	};
@@ -104,7 +126,7 @@ function RouteController($scope, $routeParams) {
 	$scope.params = $routeParams;
 };
 
-var services = angular.module('exampleApp.services', []);
+var services = angular.module('exampleApp.services', ['ngResource']);
 
 services.service('LoginService', function($http, $rootScope) {
 	
@@ -118,59 +140,7 @@ services.service('LoginService', function($http, $rootScope) {
 	};
 });
 
-services.service('NewsService', function($http, $rootScope, $window) {
+services.factory('NewsService', function($resource) {
 	
-	var self = this;
-	
-	/* TODO: This should probably be done with an interceptor */
-	this.unauthorizedHandler = function(status) {
-		if (status == 401 || status == 403) {
-			$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login.html";
-		}
-	};
-	
-	this.getAll = function(callback) {
-		$http.get('rest/news/')
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Getting entries failed: " + status;
-			});
-	};
-	
-	this.getEntry = function(id, callback) {
-		$http.get('rest/news/' + id)
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Getting entry " + id + " failed: " +  status;
-			});
-	};
-	
-	this.saveEntry = function(newsEntry, callback) {
-		$http.put('rest/news/', newsEntry)
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Saving entry " + newsEntry.id + " failed: " + status;
-			});
-	};
-	
-	this.createEntry = function(newsEntry, callback) {
-		$http.post('rest/news/', newsEntry)
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Creating entry failed: " + status;
-			});
-	};
-	
-	this.deleteEntry = function(id, callback) {
-		$http['delete']('rest/news/' + id)
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Deleting entry " + id + " failed: " +  status;
-			});
-	};
+	return $resource('rest/news/:id', {id: '@id'});
 });
