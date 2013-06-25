@@ -38,11 +38,11 @@ angular.module('exampleApp', ['exampleApp.services'])
 		            var method = config.method;
 		            var url = config.url;
 
-		            if (status == 401 || status == 403) {
-		            	$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login.html";
-		            } else {
+//		            if (status == 401 || status == 403) {
+//		            	$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login.html";
+//		            } else {
 		            	$rootScope.error = method + " on " + url + " failed with status " + status;
-		            }
+//		            }
 		            
 		            return $q.reject(response);
 		        }

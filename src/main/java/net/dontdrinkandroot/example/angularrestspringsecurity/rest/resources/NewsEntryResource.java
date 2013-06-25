@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.example.angularrestspringsecurity.rest;
+package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
 
 import java.io.IOException;
 import java.util.List;
