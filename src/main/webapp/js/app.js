@@ -17,6 +17,11 @@ angular.module('exampleApp', ['exampleApp.services'])
 				controller: EditController
 			});
 			
+			$routeProvider.when('/login', {
+				templateUrl: 'partials/login.html',
+				controller: LoginController
+			});
+			
 			$routeProvider.otherwise({
 				templateUrl: 'partials/index.html',
 				controller: IndexController
@@ -25,7 +30,7 @@ angular.module('exampleApp', ['exampleApp.services'])
 			$locationProvider.hashPrefix('!');
 			
 			/* Intercept http errors */
-			var interceptor = function ($rootScope, $q, $window) {
+			var interceptor = function ($rootScope, $q, $location) {
 
 		        function success(response) {
 		            return response;
@@ -38,11 +43,11 @@ angular.module('exampleApp', ['exampleApp.services'])
 		            var method = config.method;
 		            var url = config.url;
 
-//		            if (status == 401 || status == 403) {
-//		            	$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "login.html";
-//		            } else {
+		            if (status == 401) {
+		            	$location.path( "/login" );
+		            } else {
 		            	$rootScope.error = method + " on " + url + " failed with status " + status;
-//		            }
+		            }
 		            
 		            return $q.reject(response);
 		        }
@@ -53,7 +58,7 @@ angular.module('exampleApp', ['exampleApp.services'])
 		    };
 		    $httpProvider.responseInterceptors.push(interceptor);
 		} ]
-	).run(function($rootScope, $location, LoginService) {
+	).run(function($rootScope, $http, $location, LoginService) {
 		
 		/* Reset error when a new view is loaded */
 		$rootScope.$on('$viewContentLoaded', function() {
@@ -73,20 +78,14 @@ angular.module('exampleApp', ['exampleApp.services'])
 			return $rootScope.user.roles[role];
 		};
 		
-		LoginService.getUser(function(user) {
-			$rootScope.user = user;
-			$location.path("/");
-		});
+		$rootScope.logout = function() {
+			delete $rootScope.user;
+			delete $http.defaults.headers.common['Auth-Token'];
+			$location.path("/login");
+		};
 		
 	});
 
-function LoginController($rootScope, $location, LoginService) {
-	
-	LoginService.getUser(function(user) {
-		$rootScope.user = user;
-		$location.path("/");
-	});
-};
 
 function IndexController($scope, NewsService) {
 	
@@ -99,6 +98,7 @@ function IndexController($scope, NewsService) {
 	};
 };
 
+
 function EditController($scope, $routeParams, $location, NewsService) {
 
 	$scope.newsEntry = NewsService.get({id: $routeParams.id});
@@ -109,6 +109,7 @@ function EditController($scope, $routeParams, $location, NewsService) {
 		});
 	};
 };
+
 
 function CreateController($scope, $location, NewsService) {
 	
@@ -121,23 +122,32 @@ function CreateController($scope, $location, NewsService) {
 	};
 };
 
-function RouteController($scope, $routeParams) {
+
+function LoginController($scope, $rootScope, $location, $http, LoginService) {
 	
-	$scope.params = $routeParams;
+	$scope.login = function() {
+		LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function(user) {
+			$rootScope.user = user;
+			$http.defaults.headers.common['Auth-Token'] = user.token;
+			$location.path("/");
+		});
+	};
 };
+
 
 var services = angular.module('exampleApp.services', ['ngResource']);
 
-services.service('LoginService', function($http, $rootScope) {
+services.factory('LoginService', function($resource) {
 	
-	this.getUser = function(callback) {
-		$http.get('rest/user/')
-			.success(callback)
-			.error(function(data, status, headers, config) {
-				self.unauthorizedHandler(status);
-				$rootScope.error = "Getting user failed: " + status;
-			});
-	};
+	return $resource('rest/user/:action', {},
+			{
+				authenticate: {
+					method: 'POST',
+					params: {'action' : 'authenticate'},
+					headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+				},
+			}
+		);
 });
 
 services.factory('NewsService', function($resource) {

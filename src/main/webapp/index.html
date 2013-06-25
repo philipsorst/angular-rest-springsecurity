@@ -13,11 +13,11 @@
 				<ul class="nav">
 					<li class="active"><a href="#!/">Home</a></li>
 				</ul>
-				<ul class="nav pull-right">
+				<ul class="nav pull-right" ng-show="user">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="logout.html">Logout</a></li>
+							<li><a ng-click="logout()">Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -29,11 +29,6 @@
 		<div class="alert alert-error" ng-show="error">{{error}}</div>
 		<div ng-view></div>
 	</div>
-	
-	<footer class="container" ng-controller="RouteController">
-		<hr />
-		<div>{{params}}</div>
-	</footer>
 	
 	<script src="js/jquery-2.0.2.js"></script>
 	<script src="js/bootstrap-2.3.2.js"></script>

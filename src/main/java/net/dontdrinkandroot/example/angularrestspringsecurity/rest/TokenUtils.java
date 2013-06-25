@@ -28,7 +28,7 @@ public class TokenUtils {
 	}
 
 
-	public static char[] computeSignature(UserDetails userDetails, long expires) {
+	public static String computeSignature(UserDetails userDetails, long expires) {
 
 		StringBuilder signatureBuilder = new StringBuilder();
 		signatureBuilder.append(userDetails.getUsername());
@@ -46,6 +46,31 @@ public class TokenUtils {
 			throw new IllegalStateException("No MD5 algorithm available!");
 		}
 
-		return Hex.encode(digest.digest(signatureBuilder.toString().getBytes()));
+		return new String(Hex.encode(digest.digest(signatureBuilder.toString().getBytes())));
+	}
+
+
+	public static String getUserNameFromToken(String authToken) {
+
+		if (null == authToken) {
+			return null;
+		}
+
+		String[] parts = authToken.split(":");
+		return parts[0];
+	}
+
+
+	public static boolean validateToken(String authToken, UserDetails userDetails) {
+
+		String[] parts = authToken.split(":");
+		long expires = Long.parseLong(parts[1]);
+		String signature = parts[2];
+
+		if (expires < System.currentTimeMillis()) {
+			return false;
+		}
+
+		return signature.equals(TokenUtils.computeSignature(userDetails, expires));
 	}
 }

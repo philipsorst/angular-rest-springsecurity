@@ -13,6 +13,7 @@ import net.dontdrinkandroot.example.angularrestspringsecurity.rest.TokenUtils;
 import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.UserTransfer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,9 +32,11 @@ public class UserResource {
 	private UserDetailsService userService;
 
 	@Autowired
+	@Qualifier("authenticationManager")
 	private AuthenticationManager authManager;
 
 
+	@Path("authenticate")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password) {
@@ -45,11 +48,11 @@ public class UserResource {
 
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 
-		Object principal = authentication.getPrincipal();
-		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
-			return new UserTransfer("anonymous", roles, "");
-		}
-		UserDetails userDetails = (UserDetails) principal;
+		/*
+		 * Reload user as password of authentication principal will be null after authorization and
+		 * password is needed for token generation
+		 */
+		UserDetails userDetails = this.userService.loadUserByUsername(username);
 
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {
 			roles.put(authority.toString(), Boolean.TRUE);

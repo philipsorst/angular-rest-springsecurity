@@ -1,0 +1,23 @@
+<div class="page-header">
+	<h2>Login</h2>
+</div>
+
+<p class="alert alert-info">Login with either user:user to read entries or with admin:admin to read and edit entries.</p>
+
+<form class="form-horizontal">
+	<div class="control-group">
+		<label for="username" class="control-label">User Name:</label>
+		<div class="controls">
+			<input id="username" ng-model="username" type="text" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="password" class="control-label">Password:</label>
+		<div class="controls">
+			<input id="password" ng-model="password" type="password" />
+		</div>
+	</div>
+	<div class="form-actions">
+		<input type="submit" value="Log In" class="btn btn-primary" ng-click="login()"/>
+	</div>
+</form>
