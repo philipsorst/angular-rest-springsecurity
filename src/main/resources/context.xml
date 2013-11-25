@@ -64,12 +64,17 @@
 		SPRING SECURITY SETUP
 	-->
 	
+	<bean id="passwordEncoder" class="net.dontdrinkandroot.example.angularrestspringsecurity.security.SaltedPasswordEncoder">
+		<constructor-arg value="secret" />
+	</bean>
+	
 	<security:authentication-manager id="authenticationManager">
 		<security:authentication-provider>
 			<security:user-service id="userService">
-				<security:user name="admin" password="admin" authorities="admin, user" />
-				<security:user name="user" password="user" authorities="user" />
+				<security:user name="admin" password="f82959d41f9330bd853d3e11345e08eda948544666bfc17806493df9d4b305f0" authorities="admin, user" />
+				<security:user name="user" password="949f4ae5896a01d231c6f5af079dff23bab120cec83b787f527bc02b03f8fc91" authorities="user" />
 			</security:user-service>
+			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
 

@@ -17,6 +17,7 @@
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 		<org.hsqldb.version>2.2.9</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
+		<junit.version>4.11</junit.version>
 	</properties>
 
 	<developers>
@@ -164,7 +165,20 @@
 			<version>${javax.servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+    	<dependency>
+    		<groupId>org.springframework</groupId>
+    		<artifactId>spring-test</artifactId>
+    		<version>${spring.version}</version>
+    		<scope>test</scope>
+    	</dependency>
     	
+    	<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>${junit.version}</version>
+    		<scope>test</scope>
+    	</dependency>
 	</dependencies>
 	
 </project>

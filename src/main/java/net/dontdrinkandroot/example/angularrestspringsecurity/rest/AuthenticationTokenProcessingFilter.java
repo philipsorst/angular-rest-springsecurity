@@ -40,7 +40,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 			ServletException {
 
 		if (!(request instanceof HttpServletRequest)) {
-			throw new RuntimeException("Expecting a http request");
+			throw new RuntimeException("Expecting a HTTP request");
 		}
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -51,9 +51,12 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 			UserDetails userDetails = this.userService.loadUserByUsername(userName);
 			if (TokenUtils.validateToken(authToken, userDetails)) {
 				UsernamePasswordAuthenticationToken authentication =
-						new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
+				// new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
+				// userDetails.getPassword());
+						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails((HttpServletRequest) request));
-				SecurityContextHolder.getContext().setAuthentication(this.authManager.authenticate(authentication));
+				// SecurityContextHolder.getContext().setAuthentication(this.authManager.authenticate(authentication));
+				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
 
