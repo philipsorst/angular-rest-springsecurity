@@ -19,10 +19,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
-	//
-	// @Autowired
-	// private TokenUtils tokenUtils;
-
 	private final AuthenticationManager authManager;
 
 	private final UserDetailsService userService;
@@ -44,18 +40,16 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 		}
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		String authToken = httpRequest.getHeader("Auth-Token");
+		String authToken = httpRequest.getHeader("X-Auth-Token");
 
 		String userName = TokenUtils.getUserNameFromToken(authToken);
+
 		if (userName != null) {
 			UserDetails userDetails = this.userService.loadUserByUsername(userName);
 			if (TokenUtils.validateToken(authToken, userDetails)) {
 				UsernamePasswordAuthenticationToken authentication =
-				// new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
-				// userDetails.getPassword());
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails((HttpServletRequest) request));
-				// SecurityContextHolder.getContext().setAuthentication(this.authManager.authenticate(authentication));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}

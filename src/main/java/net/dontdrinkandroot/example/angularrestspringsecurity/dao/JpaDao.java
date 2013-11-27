@@ -7,16 +7,23 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Entity;
 
 import org.springframework.transaction.annotation.Transactional;
 
 
-public class NewsEntryDaoImpl implements NewsEntryDao {
+public class JpaDao<T extends Entity, I> implements Dao<T, I> {
 
 	private EntityManager entityManager;
+
+	protected Class<T> entityClass;
+
+
+	public JpaDao(Class<T> entityClass) {
+
+		this.entityClass = entityClass;
+	}
 
 
 	public EntityManager getEntityManager() {
@@ -34,49 +41,48 @@ public class NewsEntryDaoImpl implements NewsEntryDao {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<NewsEntry> findAll() {
+	public List<T> findAll() {
 
 		final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
-		final CriteriaQuery<NewsEntry> criteriaQuery = builder.createQuery(NewsEntry.class);
+		final CriteriaQuery<T> criteriaQuery = builder.createQuery(this.entityClass);
 
-		Root<NewsEntry> root = criteriaQuery.from(NewsEntry.class);
-		criteriaQuery.orderBy(builder.desc(root.get("date")));
+		criteriaQuery.from(this.entityClass);
 
-		TypedQuery<NewsEntry> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
+		TypedQuery<T> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
 		return typedQuery.getResultList();
 	}
 
 
 	@Override
 	@Transactional(readOnly = true)
-	public NewsEntry find(Long id) {
+	public T find(I id) {
 
-		return this.getEntityManager().find(NewsEntry.class, id);
+		return this.getEntityManager().find(this.entityClass, id);
 	}
 
 
 	@Override
 	@Transactional
-	public NewsEntry save(NewsEntry newsEntry) {
+	public T save(T entity) {
 
-		return this.getEntityManager().merge(newsEntry);
+		return this.getEntityManager().merge(entity);
 	}
 
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public void delete(I id) {
 
 		if (id == null) {
 			return;
 		}
 
-		NewsEntry newsEntry = this.find(id);
-		if (newsEntry == null) {
+		T entity = this.find(id);
+		if (entity == null) {
 			return;
 		}
 
-		this.getEntityManager().remove(newsEntry);
+		this.getEntityManager().remove(entity);
 	}
 
 }

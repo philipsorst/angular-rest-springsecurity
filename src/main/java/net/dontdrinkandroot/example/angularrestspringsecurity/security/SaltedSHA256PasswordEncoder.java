@@ -8,14 +8,19 @@ import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-public class SaltedPasswordEncoder implements PasswordEncoder {
+/**
+ * Simple password encoder that uses a salt value and encodes the password with SHA-256.
+ * 
+ * @author Philip W. Sorst <philip@sorst.net>
+ */
+public class SaltedSHA256PasswordEncoder implements PasswordEncoder {
 
 	private final String salt;
 
 	private final MessageDigest digest;
 
 
-	public SaltedPasswordEncoder(String salt) throws NoSuchAlgorithmException {
+	public SaltedSHA256PasswordEncoder(String salt) throws NoSuchAlgorithmException {
 
 		this.salt = salt;
 		this.digest = MessageDigest.getInstance("SHA-256");

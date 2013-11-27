@@ -80,7 +80,7 @@ angular.module('exampleApp', ['exampleApp.services'])
 		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
-			delete $http.defaults.headers.common['Auth-Token'];
+			delete $http.defaults.headers.common['X-Auth-Token'];
 			$location.path("/login");
 		};
 		
@@ -128,7 +128,7 @@ function LoginController($scope, $rootScope, $location, $http, LoginService) {
 	$scope.login = function() {
 		LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function(user) {
 			$rootScope.user = user;
-			$http.defaults.headers.common['Auth-Token'] = user.token;
+			$http.defaults.headers.common['X-Auth-Token'] = user.token;
 			$location.path("/");
 		});
 	};

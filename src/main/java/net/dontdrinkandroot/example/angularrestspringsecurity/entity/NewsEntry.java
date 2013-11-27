@@ -1,10 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -13,8 +11,13 @@ import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
 import org.codehaus.jackson.map.annotate.JsonView;
 
 
-@Entity
-public class NewsEntry implements Serializable {
+/**
+ * JPA Annotated Pojo that represents a news entry.
+ * 
+ * @author Philip W. Sorst <philip@sorst.net>
+ */
+@javax.persistence.Entity
+public class NewsEntry implements Entity {
 
 	@Id
 	@GeneratedValue

@@ -2,9 +2,15 @@ package net.dontdrinkandroot.example.angularrestspringsecurity.dao;
 
 import java.util.Date;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
 
 
+/**
+ * Initialized the database with some test entries.
+ * 
+ * @author Philip W. Sorst <philip@sorst.net>
+ */
 public class DataBaseInitializer {
 
 	private NewsEntryDao newsEntryDao;

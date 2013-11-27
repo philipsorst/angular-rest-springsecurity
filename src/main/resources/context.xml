@@ -43,7 +43,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	
-	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.NewsEntryDaoImpl">
+	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.JpaNewsEntryDao">
 	</bean>
 	
 	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
@@ -64,7 +64,7 @@
 		SPRING SECURITY SETUP
 	-->
 	
-	<bean id="passwordEncoder" class="net.dontdrinkandroot.example.angularrestspringsecurity.security.SaltedPasswordEncoder">
+	<bean id="passwordEncoder" class="net.dontdrinkandroot.example.angularrestspringsecurity.security.SaltedSHA256PasswordEncoder">
 		<constructor-arg value="secret" />
 	</bean>
 	
@@ -99,19 +99,5 @@
 		<constructor-arg ref="authenticationManager" />
 		<constructor-arg ref="userService" />
 	</bean>
-
-	<!-- <security:http use-expressions="true" entry-point-ref="forbiddenEntryPoint">
-		<security:intercept-url method="GET" pattern="/rest/news/**"
-			access="hasRole('user')" />
-		<security:intercept-url method="PUT" pattern="/rest/news/**"
-			access="hasRole('admin')" />
-		<security:intercept-url method="POST" pattern="/rest/news/**"
-			access="hasRole('admin')" />
-		<security:intercept-url method="DELETE"
-			pattern="/rest/news/**" access="hasRole('admin')" />
-		<security:form-login login-page="/login.html"
-			default-target-url="/#!/loggedin/" always-use-default-target="true" />
-		<security:logout logout-url="/logout.html" />
-	</security:http> -->
 
 </beans>

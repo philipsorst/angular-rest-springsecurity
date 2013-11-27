@@ -14,7 +14,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
-import net.dontdrinkandroot.example.angularrestspringsecurity.dao.NewsEntryDao;
+import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
 
 import org.codehaus.jackson.JsonGenerationException;
