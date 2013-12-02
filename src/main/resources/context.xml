@@ -46,8 +46,13 @@
 	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.JpaNewsEntryDao">
 	</bean>
 	
+	<bean id="userDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.user.JpaUserDao">
+	</bean>
+	
 	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
+		<constructor-arg ref="userDao" />
 		<constructor-arg ref="newsEntryDao" />
+		<constructor-arg ref="passwordEncoder" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -69,11 +74,7 @@
 	</bean>
 	
 	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider>
-			<security:user-service id="userService">
-				<security:user name="admin" password="f82959d41f9330bd853d3e11345e08eda948544666bfc17806493df9d4b305f0" authorities="admin, user" />
-				<security:user name="user" password="949f4ae5896a01d231c6f5af079dff23bab120cec83b787f527bc02b03f8fc91" authorities="user" />
-			</security:user-service>
+		<security:authentication-provider user-service-ref="userDao">
 			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
@@ -96,8 +97,7 @@
 	<bean id="unauthorizedEntryPoint" class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.UnauthorizedEntryPoint" />
 
 	<bean class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">
-		<constructor-arg ref="authenticationManager" />
-		<constructor-arg ref="userService" />
+		<constructor-arg ref="userDao" />
 	</bean>
 
 </beans>

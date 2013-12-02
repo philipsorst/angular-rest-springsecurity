@@ -6,5 +6,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
 	<persistence-unit name="examplePU">
 		<class>net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry</class>
+		<class>net.dontdrinkandroot.example.angularrestspringsecurity.entity.User</class>
 	</persistence-unit>
 </persistence>

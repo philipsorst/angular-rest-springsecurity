@@ -8,7 +8,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,14 +18,11 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
-	private final AuthenticationManager authManager;
-
 	private final UserDetailsService userService;
 
 
-	public AuthenticationTokenProcessingFilter(AuthenticationManager authManager, UserDetailsService userService) {
+	public AuthenticationTokenProcessingFilter(UserDetailsService userService) {
 
-		this.authManager = authManager;
 		this.userService = userService;
 	}
 

@@ -67,7 +67,7 @@ public class NewsEntryResource {
 	@Path("{id}")
 	public NewsEntry read(@PathParam("id") Long id) {
 
-		this.logger.info("getEntry(id)");
+		this.logger.info("read(id)");
 
 		NewsEntry newsEntry = this.newsEntryDao.find(id);
 		if (newsEntry == null) {
@@ -105,7 +105,7 @@ public class NewsEntryResource {
 	@Path("{id}")
 	public void delete(@PathParam("id") Long id) {
 
-		this.logger.info("deleteEntry(id)");
+		this.logger.info("delete(id)");
 
 		this.newsEntryDao.delete(id);
 	}
