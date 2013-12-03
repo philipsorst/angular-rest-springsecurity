@@ -1,11 +1,6 @@
-angular.module('exampleApp', ['ngRoute', 'exampleApp.services'])
+angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 	.config(
 		[ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
-			
-			$routeProvider.when('/loggedin', {
-				templateUrl: 'partials/loggedin.html',
-				controller: LoginController
-			});
 			
 			$routeProvider.when('/create', {
 				templateUrl: 'partials/create.html',
@@ -57,9 +52,10 @@ angular.module('exampleApp', ['ngRoute', 'exampleApp.services'])
 		        };
 		    };
 		    $httpProvider.responseInterceptors.push(interceptor);
+		   
 		} ]
 		
-	).run(function($rootScope, $http, $location, LoginService) {
+	).run(function($rootScope, $http, $location, $cookieStore, LoginService) {
 		
 		/* Reset error when a new view is loaded */
 		$rootScope.$on('$viewContentLoaded', function() {
@@ -82,8 +78,18 @@ angular.module('exampleApp', ['ngRoute', 'exampleApp.services'])
 		$rootScope.logout = function() {
 			delete $rootScope.user;
 			delete $http.defaults.headers.common['X-Auth-Token'];
+			$cookieStore.remove('user');
 			$location.path("/login");
 		};
+		
+		 /* Try getting valid user from cookie or go to login page */
+		var originalPath = $location.path();
+		$location.path("/login");
+		var user = $cookieStore.get('user');
+		if (user !== undefined) {
+			$http.defaults.headers.common['X-Auth-Token'] = user.token;
+			$location.path(originalPath);
+		}
 		
 	});
 
@@ -124,12 +130,13 @@ function CreateController($scope, $location, NewsService) {
 };
 
 
-function LoginController($scope, $rootScope, $location, $http, LoginService) {
+function LoginController($scope, $rootScope, $location, $http, $cookieStore, LoginService) {
 	
 	$scope.login = function() {
 		LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function(user) {
 			$rootScope.user = user;
 			$http.defaults.headers.common['X-Auth-Token'] = user.token;
+			$cookieStore.put('user', user);
 			$location.path("/");
 		});
 	};
