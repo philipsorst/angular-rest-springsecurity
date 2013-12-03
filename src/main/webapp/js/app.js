@@ -1,4 +1,4 @@
-angular.module('exampleApp', ['exampleApp.services'])
+angular.module('exampleApp', ['ngRoute', 'exampleApp.services'])
 	.config(
 		[ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 			
@@ -58,6 +58,7 @@ angular.module('exampleApp', ['exampleApp.services'])
 		    };
 		    $httpProvider.responseInterceptors.push(interceptor);
 		} ]
+		
 	).run(function($rootScope, $http, $location, LoginService) {
 		
 		/* Reset error when a new view is loaded */
@@ -105,7 +106,7 @@ function EditController($scope, $routeParams, $location, NewsService) {
 	
 	$scope.save = function() {
 		$scope.newsEntry.$save(function() {
-			$location.path('#!/');
+			$location.path('/');
 		});
 	};
 };
@@ -117,7 +118,7 @@ function CreateController($scope, $location, NewsService) {
 	
 	$scope.save = function() {
 		$scope.newsEntry.$save(function() {
-			$location.path('#!/');
+			$location.path('/');
 		});
 	};
 };
