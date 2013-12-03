@@ -3,13 +3,15 @@
 </div>
 
 <form class="form-horizontal">
-	<div class="control-group">
-		<label class="control-label" for="content">Content</label>
-		<div class="controls">
-			<textarea ng-model="newsEntry.content" id="content" class="input-xxlarge" rows="4">{{newsEntry.content}}</textarea>
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="content">Content</label>
+		<div class="col-sm-10">
+			<textarea ng-model="newsEntry.content" id="content" class="form-control" rows="10">{{newsEntry.content}}</textarea>
 		</div>
 	</div>
-	<div class="form-actions">
-		<button type="submit" class="btn" ng-click="save()">Save</button>
+	<div class="form-group">
+		<div class="col-sm-10 col-sm-offset-2">
+			<button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
+		</div>
 	</div>
 </form>

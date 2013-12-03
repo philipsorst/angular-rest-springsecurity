@@ -1,5 +1,5 @@
 <div style="float: right">
-	<a href="#!/create" class="btn" ng-show="hasRole('admin')"><i class="icon-plus"></i> Create</a>
+	<a href="#!/create" class="btn btn-default" ng-show="hasRole('admin')">Create</a>
 </div>
 <div class="page-header">
 	<h3>News</h3>
@@ -7,9 +7,9 @@
 
 <div ng-repeat="newsEntry in newsEntries">
 	<hr />
-	<div style="float: right">
-		<a ng-click="deleteEntry(newsEntry)" class="btn btn-mini" ng-show="hasRole('admin')"><i class="icon-remove"></i></a>
-		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-mini" ng-show="hasRole('admin')"><i class="icon-pencil"></i></a>
+	<div class="pull-right">
+		<a ng-click="deleteEntry(newsEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')">Remove</a>
+		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-xs btn-default" ng-show="hasRole('admin')">Edit</a>
 	</div>
 	<h4>{{newsEntry.date | date}}</h4>
 	<p>{{newsEntry.content}}</p>
