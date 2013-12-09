@@ -87,7 +87,9 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		$location.path("/login");
 		var user = $cookieStore.get('user');
 		if (user !== undefined) {
+			$rootScope.user = user;
 			$http.defaults.headers.common['X-Auth-Token'] = user.token;
+			
 			$location.path(originalPath);
 		}
 		
