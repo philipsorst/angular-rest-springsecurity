@@ -1,19 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import net.dontdrinkandroot.example.angularrestspringsecurity.rest.TokenUtils;
 import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.UserTransfer;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
@@ -32,7 +29,6 @@ public class UserResource {
 	private UserDetailsService userService;
 
 	@Autowired
-	@Qualifier("authenticationManager")
 	private AuthenticationManager authManager;
 
 

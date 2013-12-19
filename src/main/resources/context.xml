@@ -8,16 +8,16 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
-			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
-			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<context:annotation-config />
 
 	<!--
-		DATABASE SETUP 
+		DATABASE SETUP
 	 -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -42,13 +42,13 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
+
 	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.JpaNewsEntryDao">
 	</bean>
-	
+
 	<bean id="userDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.user.JpaUserDao">
 	</bean>
-	
+
 	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
 		<constructor-arg ref="userDao" />
 		<constructor-arg ref="newsEntryDao" />
@@ -58,46 +58,21 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!--
-		INIT REST COMPONENTS 
+		INIT REST COMPONENTS
 	 -->
-	
+
 	<context:component-scan base-package="net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources" />
-	
+
 	<bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
-	
-	<!-- 
+
+	<!--
 		SPRING SECURITY SETUP
 	-->
-	
+
 	<bean id="passwordEncoder" class="net.dontdrinkandroot.example.angularrestspringsecurity.security.SaltedSHA256PasswordEncoder">
 		<constructor-arg value="secret" />
 	</bean>
-	
-	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider user-service-ref="userDao">
-			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
-		</security:authentication-provider>
-	</security:authentication-manager>
 
-	<security:http
-			realm="Protected API"
-			use-expressions="true"
-			auto-config="false"
-			create-session="stateless"
-			entry-point-ref="unauthorizedEntryPoint"
-			authentication-manager-ref="authenticationManager">
-		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
-		<security:intercept-url pattern="/rest/user/authenticate" access="permitAll" />
-		<security:intercept-url method="GET" pattern="/rest/news/**" access="hasRole('user')" />
-		<security:intercept-url method="PUT" pattern="/rest/news/**" access="hasRole('admin')" />
-		<security:intercept-url method="POST" pattern="/rest/news/**" access="hasRole('admin')" />
-		<security:intercept-url method="DELETE" pattern="/rest/news/**" access="hasRole('admin')" />
-	</security:http>
-
-	<bean id="unauthorizedEntryPoint" class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.UnauthorizedEntryPoint" />
-
-	<bean class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">
-		<constructor-arg ref="userDao" />
-	</bean>
+    <!-- Configuration defined in WebSecurityConfig.java. The passwordEncoder bean is defined here b/c it's used by dataBaseInitializer. -->
 
 </beans>
