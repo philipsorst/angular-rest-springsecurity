@@ -18,6 +18,7 @@
 		<org.hsqldb.version>2.2.9</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<junit.version>4.11</junit.version>
+		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
 	</properties>
 
 	<developers>
@@ -49,6 +50,11 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${org.eclipse.jetty.jetty-maven-plugin.version}</version>
 			</plugin>
 		</plugins>
 	</build>
