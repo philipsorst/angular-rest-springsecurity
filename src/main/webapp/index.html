@@ -2,7 +2,8 @@
 <html ng-app="exampleApp">
 <head>
 	<title>Angular Rest SpringSecurity Example</title>
-	<link href="css/bootstrap-3.0.2.min.css" rel="stylesheet">
+	<link href="css/bootstrap-3.1.1.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
 </head>
 <body style="padding-top: 60px">
 
@@ -27,7 +28,7 @@
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="" ng-click="logout()">Logout</a></li>
+							<li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -41,7 +42,7 @@
 	</div>
 	
 	<script src="js/jquery-2.0.2.js"></script>
-	<script src="js/bootstrap-3.0.2.min.js"></script>
+	<script src="js/bootstrap-3.1.1.min.js"></script>
 	<script src="js/angular-1.2.3.js"></script>
 	<script src="js/angular-resource-1.2.3.js"></script>
 	<script src="js/angular-route-1.2.3.js"></script>
