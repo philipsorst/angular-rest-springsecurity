@@ -36,7 +36,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 		}
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		String authToken = httpRequest.getHeader("X-Auth-Token");
+		String authToken = this.extractAuthTokenFromRequest(httpRequest);
 
 		String userName = TokenUtils.getUserNameFromToken(authToken);
 
@@ -51,5 +51,16 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 		}
 
 		chain.doFilter(request, response);
+	}
+
+
+	private String extractAuthTokenFromRequest(HttpServletRequest httpRequest) {
+
+		String authToken = httpRequest.getHeader("X-Auth-Token");
+		if (authToken == null) {
+			authToken = httpRequest.getParameter("token");
+		}
+
+		return authToken;
 	}
 }

@@ -11,7 +11,7 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 				templateUrl: 'partials/edit.html',
 				controller: EditController
 			});
-			
+
 			$routeProvider.when('/login', {
 				templateUrl: 'partials/login.html',
 				controller: LoginController
@@ -24,38 +24,52 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 			
 			$locationProvider.hashPrefix('!');
 			
-			/* Intercept http errors */
-			var interceptor = function ($rootScope, $q, $location) {
-
-		        function success(response) {
-		            return response;
-		        }
-
-		        function error(response) {
-		        	
-		            var status = response.status;
-		            var config = response.config;
-		            var method = config.method;
-		            var url = config.url;
-
-		            if (status == 401) {
-		            	$location.path( "/login" );
-		            } else {
-		            	$rootScope.error = method + " on " + url + " failed with status " + status;
-		            }
-		            
-		            return $q.reject(response);
-		        }
-
-		        return function (promise) {
-		            return promise.then(success, error);
+			/* Register error provider that shows message on failed requests or redirects to login page on
+			 * unauthenticated requests */
+		    $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+			        return {
+			        	'responseError': function(rejection) {
+			        		var status = rejection.status;
+			        		var config = rejection.config;
+			        		var method = config.method;
+			        		var url = config.url;
+			      
+			        		if (status == 401) {
+			        			$location.path( "/login" );
+			        		} else {
+			        			$rootScope.error = method + " on " + url + " failed with status " + status;
+			        		}
+			              
+			        		return $q.reject(rejection);
+			        	}
+			        };
+			    }
+		    );
+		    
+		    /* Registers auth token interceptor, auth token is either passed by header or by query parameter
+		     * as soon as there is an authenticated user */
+		    $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+		        return {
+		        	'request': function(config) {
+		        		var isRestCall = config.url.indexOf('rest') == 0;
+		        		console.log(config, isRestCall);
+		        		if (isRestCall && angular.isDefined($rootScope.user) && angular.isDefined($rootScope.user.token)) {
+		        			var token = $rootScope.user.token;
+		        			if (exampleAppConfig.useAuthTokenHeader) {
+		        				config.headers['X-Auth-Token'] = token;
+		        			} else {
+		        				config.url = config.url + "?token=" + token;
+		        			}
+		        		}
+		        		return config || $q.when(config);
+		        	}
 		        };
-		    };
-		    $httpProvider.responseInterceptors.push(interceptor);
+		    }
+	    );
 		   
 		} ]
 		
-	).run(function($rootScope, $http, $location, $cookieStore, LoginService) {
+	).run(function($rootScope, $location, $cookieStore, LoginService) {
 		
 		/* Reset error when a new view is loaded */
 		$rootScope.$on('$viewContentLoaded', function() {
@@ -77,7 +91,6 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
-			delete $http.defaults.headers.common['X-Auth-Token'];
 			$cookieStore.remove('user');
 			$location.path("/login");
 		};
@@ -88,8 +101,6 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		var user = $cookieStore.get('user');
 		if (user !== undefined) {
 			$rootScope.user = user;
-			$http.defaults.headers.common['X-Auth-Token'] = user.token;
-			
 			$location.path(originalPath);
 		}
 		
@@ -133,12 +144,11 @@ function CreateController($scope, $location, NewsService) {
 };
 
 
-function LoginController($scope, $rootScope, $location, $http, $cookieStore, LoginService) {
+function LoginController($scope, $rootScope, $location, $cookieStore, LoginService) {
 	
 	$scope.login = function() {
 		LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function(user) {
 			$rootScope.user = user;
-			$http.defaults.headers.common['X-Auth-Token'] = user.token;
 			$cookieStore.put('user', user);
 			$location.path("/");
 		});
