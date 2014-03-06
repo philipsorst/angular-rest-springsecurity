@@ -1,4 +1,4 @@
-<div style="float: right">
+<div class="pull-right">
 	<a href="#!/create" class="btn btn-default" ng-show="hasRole('admin')" title="Create"><span class="glyphicon glyphicon-plus"></span></a>
 </div>
 <div class="page-header">
@@ -8,7 +8,7 @@
 <div ng-repeat="newsEntry in newsEntries">
 	<hr />
 	<div class="pull-right">
-		<a ng-click="deleteEntry(newsEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
+		<a href="" ng-click="deleteEntry(newsEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
 		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="edit"><span class="glyphicon glyphicon-pencil"></span></a>
 	</div>
 	<h4>{{newsEntry.date | date}}</h4>
