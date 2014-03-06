@@ -55,7 +55,7 @@ public class UserResource {
 		UserDetails userDetails = this.userService.loadUserByUsername(username);
 
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {
-			roles.put(authority.toString(), Boolean.TRUE);
+			roles.put(authority.getAuthority(), Boolean.TRUE);
 		}
 
 		return new UserTransfer(userDetails.getUsername(), roles, TokenUtils.createToken(userDetails));
