@@ -5,9 +5,13 @@
 	<link href="css/bootstrap-3.1.1.min.css" rel="stylesheet">
 	<link href="css/custom.css" rel="stylesheet">
 </head>
-<body style="padding-top: 60px">
+<body>
 
-	<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+	<div class="loader" ng-hide="initialized">
+		Loading...
+	</div>
+
+	<nav class="navbar navbar-fixed-top navbar-default ng-hide" role="navigation" ng-show="initialized">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -40,7 +44,7 @@
 		</div>
 	</nav>
 
-	<div class="container">
+	<div class="container ng-hide" ng-show="initialized">
 		<div class="alert alert-danger" ng-show="error">{{error}}</div>
 		<div ng-view></div>
 	</div>

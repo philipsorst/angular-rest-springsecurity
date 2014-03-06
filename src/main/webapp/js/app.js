@@ -93,6 +93,7 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 			$location.path(originalPath);
 		}
 		
+		$rootScope.initialized = true;
 	});
 
 
