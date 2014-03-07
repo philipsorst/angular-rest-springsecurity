@@ -52,13 +52,12 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		        return {
 		        	'request': function(config) {
 		        		var isRestCall = config.url.indexOf('rest') == 0;
-		        		console.log(config, isRestCall);
-		        		if (isRestCall && angular.isDefined($rootScope.user) && angular.isDefined($rootScope.user.token)) {
-		        			var token = $rootScope.user.token;
+		        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
+		        			var authToken = $rootScope.authToken;
 		        			if (exampleAppConfig.useAuthTokenHeader) {
-		        				config.headers['X-Auth-Token'] = token;
+		        				config.headers['X-Auth-Token'] = authToken;
 		        			} else {
-		        				config.url = config.url + "?token=" + token;
+		        				config.url = config.url + "?token=" + authToken;
 		        			}
 		        		}
 		        		return config || $q.when(config);
@@ -69,7 +68,7 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		   
 		} ]
 		
-	).run(function($rootScope, $location, $cookieStore, LoginService) {
+	).run(function($rootScope, $location, $cookieStore, UserService) {
 		
 		/* Reset error when a new view is loaded */
 		$rootScope.$on('$viewContentLoaded', function() {
@@ -91,17 +90,21 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
-			$cookieStore.remove('user');
+			delete $rootScope.authToken;
+			$cookieStore.remove('authToken');
 			$location.path("/login");
 		};
 		
 		 /* Try getting valid user from cookie or go to login page */
 		var originalPath = $location.path();
 		$location.path("/login");
-		var user = $cookieStore.get('user');
-		if (user !== undefined) {
-			$rootScope.user = user;
-			$location.path(originalPath);
+		var authToken = $cookieStore.get('authToken');
+		if (authToken !== undefined) {
+			$rootScope.authToken = authToken;
+			UserService.get(function(user) {
+				$rootScope.user = user;
+				$location.path(originalPath);
+			});
 		}
 		
 		$rootScope.initialized = true;
@@ -144,13 +147,21 @@ function CreateController($scope, $location, NewsService) {
 };
 
 
-function LoginController($scope, $rootScope, $location, $cookieStore, LoginService) {
+function LoginController($scope, $rootScope, $location, $cookieStore, UserService) {
+	
+	$scope.rememberMe = false;
 	
 	$scope.login = function() {
-		LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function(user) {
-			$rootScope.user = user;
-			$cookieStore.put('user', user);
-			$location.path("/");
+		UserService.authenticate($.param({username: $scope.username, password: $scope.password}), function(authenticationResult) {
+			var authToken = authenticationResult.token;
+			$rootScope.authToken = authToken;
+			if ($scope.rememberMe) {
+				$cookieStore.put('authToken', authToken);
+			}
+			UserService.get(function(user) {
+				$rootScope.user = user;
+				$location.path("/");
+			});
 		});
 	};
 };
@@ -158,7 +169,7 @@ function LoginController($scope, $rootScope, $location, $cookieStore, LoginServi
 
 var services = angular.module('exampleApp.services', ['ngResource']);
 
-services.factory('LoginService', function($resource) {
+services.factory('UserService', function($resource) {
 	
 	return $resource('rest/user/:action', {},
 			{

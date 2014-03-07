@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.rest.TokenUtils;
+import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.TokenTransfer;
 import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.UserTransfer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +39,44 @@ public class UserResource {
 	private AuthenticationManager authManager;
 
 
+	/**
+	 * Retrieves the currently logged in user.
+	 * 
+	 * @return A transfer containing the username and the roles.
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserTransfer getUser() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
+			throw new WebApplicationException(401);
+		}
+		UserDetails userDetails = (UserDetails) principal;
+
+		return new UserTransfer(userDetails.getUsername(), this.createRoleMap(userDetails));
+	}
+
+
+	/**
+	 * Authenticates a user and creates an authentication token.
+	 * 
+	 * @param username
+	 *            The name of the user.
+	 * @param password
+	 *            The password of the user.
+	 * @return A transfer containing the authentication token.
+	 */
 	@Path("authenticate")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password) {
+	public TokenTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password) {
 
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(username, password);
 		Authentication authentication = this.authManager.authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 
 		/*
 		 * Reload user as password of authentication principal will be null after authorization and
@@ -54,11 +84,18 @@ public class UserResource {
 		 */
 		UserDetails userDetails = this.userService.loadUserByUsername(username);
 
+		return new TokenTransfer(TokenUtils.createToken(userDetails));
+	}
+
+
+	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
+
+		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {
 			roles.put(authority.getAuthority(), Boolean.TRUE);
 		}
 
-		return new UserTransfer(userDetails.getUsername(), roles, TokenUtils.createToken(userDetails));
+		return roles;
 	}
 
 }
