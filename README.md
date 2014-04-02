@@ -1,7 +1,9 @@
 angular-rest-springsecurity
 ===========================
 
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=shoxrocks&url=https://github.com/philipsorst/angular-rest-springsecurity&title=Angular JS Spring Security Example&language=&tags=github&category=software) 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=shoxrocks&url=http://sorst.net/github/angular-rest-springsecurity&title=AngularJS REST Spring Security Example&language=&tags=github&category=software)
+
+[![Donate](http://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W9NAXW8YAZ4D6&item_name=Angular REST SpringSecurity Example Donation&currency_code=EUR) 
 
 An example AngularJS Application that uses a Spring Security protected Jersey REST backend based on Hibernate/JPA.
 
