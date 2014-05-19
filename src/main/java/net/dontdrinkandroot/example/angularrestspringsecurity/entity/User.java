@@ -27,7 +27,7 @@ public class User implements Entity, UserDetails
 	@Column(unique = true, length = 16, nullable = false)
 	private String name;
 
-	@Column(length = 64, nullable = false)
+	@Column(length = 80, nullable = false)
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
