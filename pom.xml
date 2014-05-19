@@ -8,14 +8,14 @@
 
 	<properties>
 		<!-- Spring Security is based on Spring 3.0.7 -->
-		<spring.version>3.0.7.RELEASE</spring.version>
-		<spring.security.version>3.1.4.RELEASE</spring.security.version>
-		<jersey.version>1.17.1</jersey.version>
-		<org.slf4j.version>1.7.5</org.slf4j.version>
+		<spring.version>3.2.8.RELEASE</spring.version>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<jersey.version>1.18.1</jersey.version>
+		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<javax.servlet-api.version>2.5</javax.servlet-api.version>
-		<org.hibernate.version>4.2.2.Final</org.hibernate.version>
+		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-		<org.hsqldb.version>2.2.9</org.hsqldb.version>
+		<org.hsqldb.version>2.3.2</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<junit.version>4.11</junit.version>
 		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
