@@ -13,23 +13,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
-public class SaltedSHA256PasswordEncoder implements PasswordEncoder {
+public class SaltedSHA256PasswordEncoder implements PasswordEncoder
+{
 
 	private final String salt;
 
 	private final MessageDigest digest;
 
 
-	public SaltedSHA256PasswordEncoder(String salt) throws NoSuchAlgorithmException {
-
+	public SaltedSHA256PasswordEncoder(String salt) throws NoSuchAlgorithmException
+	{
 		this.salt = salt;
 		this.digest = MessageDigest.getInstance("SHA-256");
 	}
 
 
 	@Override
-	public String encode(CharSequence rawPassword) {
-
+	public String encode(CharSequence rawPassword)
+	{
 		String saltedPassword = rawPassword + this.salt;
 		try {
 			return new String(Hex.encode(this.digest.digest(saltedPassword.getBytes("UTF-8"))));
@@ -40,8 +41,8 @@ public class SaltedSHA256PasswordEncoder implements PasswordEncoder {
 
 
 	@Override
-	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-
+	public boolean matches(CharSequence rawPassword, String encodedPassword)
+	{
 		return this.encode(rawPassword).equals(encodedPassword);
 	}
 

@@ -18,18 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
-public class JpaNewsEntryDao extends JpaDao<NewsEntry, Long> implements NewsEntryDao {
+public class JpaNewsEntryDao extends JpaDao<NewsEntry, Long> implements NewsEntryDao
+{
 
-	public JpaNewsEntryDao() {
-
+	public JpaNewsEntryDao()
+	{
 		super(NewsEntry.class);
 	}
 
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<NewsEntry> findAll() {
-
+	public List<NewsEntry> findAll()
+	{
 		final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
 		final CriteriaQuery<NewsEntry> criteriaQuery = builder.createQuery(NewsEntry.class);
 

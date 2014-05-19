@@ -17,7 +17,8 @@ import org.codehaus.jackson.map.annotate.JsonView;
  * @author Philip W. Sorst <philip@sorst.net>
  */
 @javax.persistence.Entity
-public class NewsEntry implements Entity {
+public class NewsEntry implements Entity
+{
 
 	@Id
 	@GeneratedValue
@@ -30,48 +31,48 @@ public class NewsEntry implements Entity {
 	private String content;
 
 
-	public NewsEntry() {
-
+	public NewsEntry()
+	{
 		this.date = new Date();
 	}
 
 
 	@JsonView(JsonViews.Admin.class)
-	public Long getId() {
-
+	public Long getId()
+	{
 		return this.id;
 	}
 
 
 	@JsonView(JsonViews.User.class)
-	public Date getDate() {
-
+	public Date getDate()
+	{
 		return this.date;
 	}
 
 
-	public void setDate(Date date) {
-
+	public void setDate(Date date)
+	{
 		this.date = date;
 	}
 
 
 	@JsonView(JsonViews.User.class)
-	public String getContent() {
-
+	public String getContent()
+	{
 		return this.content;
 	}
 
 
-	public void setContent(String content) {
-
+	public void setContent(String content)
+	{
 		this.content = content;
 	}
 
 
 	@Override
-	public String toString() {
-
+	public String toString()
+	{
 		return String.format("NewsEntry[%d, %s]", this.id, this.content);
 	}
 

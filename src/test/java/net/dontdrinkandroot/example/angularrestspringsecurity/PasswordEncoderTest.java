@@ -11,14 +11,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:context.xml" })
-public class PasswordEncoderTest {
+public class PasswordEncoderTest
+{
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 
 	@Test
-	public void testDefaultPasswords() {
+	public void testDefaultPasswords()
+	{
 
 		System.out.println(this.passwordEncoder.encode("user"));
 		System.out.println(this.passwordEncoder.encode("admin"));

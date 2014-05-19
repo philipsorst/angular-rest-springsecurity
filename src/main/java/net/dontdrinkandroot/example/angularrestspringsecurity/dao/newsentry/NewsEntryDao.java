@@ -9,6 +9,7 @@ import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
-public interface NewsEntryDao extends Dao<NewsEntry, Long> {
+public interface NewsEntryDao extends Dao<NewsEntry, Long>
+{
 
 }

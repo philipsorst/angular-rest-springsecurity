@@ -15,7 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
-public class DataBaseInitializer {
+public class DataBaseInitializer
+{
 
 	private NewsEntryDao newsEntryDao;
 
@@ -24,22 +25,22 @@ public class DataBaseInitializer {
 	private PasswordEncoder passwordEncoder;
 
 
-	protected DataBaseInitializer() {
-
+	protected DataBaseInitializer()
+	{
 		/* Default constructor for reflection instantiation */
 	}
 
 
-	public DataBaseInitializer(UserDao userDao, NewsEntryDao newsEntryDao, PasswordEncoder passwordEncoder) {
-
+	public DataBaseInitializer(UserDao userDao, NewsEntryDao newsEntryDao, PasswordEncoder passwordEncoder)
+	{
 		this.userDao = userDao;
 		this.newsEntryDao = newsEntryDao;
 		this.passwordEncoder = passwordEncoder;
 	}
 
 
-	public void initDataBase() {
-
+	public void initDataBase()
+	{
 		User userUser = new User("user", this.passwordEncoder.encode("user"));
 		userUser.addRole("user");
 		this.userDao.save(userUser);

@@ -16,21 +16,22 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.GenericFilterBean;
 
 
-public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
+public class AuthenticationTokenProcessingFilter extends GenericFilterBean
+{
 
 	private final UserDetailsService userService;
 
 
-	public AuthenticationTokenProcessingFilter(UserDetailsService userService) {
-
+	public AuthenticationTokenProcessingFilter(UserDetailsService userService)
+	{
 		this.userService = userService;
 	}
 
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-			ServletException {
-
+			ServletException
+	{
 		HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
 		String authToken = this.extractAuthTokenFromRequest(httpRequest);
@@ -53,8 +54,8 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 	}
 
 
-	private HttpServletRequest getAsHttpRequest(ServletRequest request) {
-
+	private HttpServletRequest getAsHttpRequest(ServletRequest request)
+	{
 		if (!(request instanceof HttpServletRequest)) {
 			throw new RuntimeException("Expecting an HTTP request");
 		}
@@ -63,8 +64,8 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 	}
 
 
-	private String extractAuthTokenFromRequest(HttpServletRequest httpRequest) {
-
+	private String extractAuthTokenFromRequest(HttpServletRequest httpRequest)
+	{
 		/* Get token from header */
 		String authToken = httpRequest.getHeader("X-Auth-Token");
 

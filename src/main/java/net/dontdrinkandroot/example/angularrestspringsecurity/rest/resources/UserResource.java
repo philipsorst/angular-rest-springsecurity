@@ -29,7 +29,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Path("/user")
-public class UserResource {
+public class UserResource
+{
 
 	@Autowired
 	private UserDetailsService userService;
@@ -46,8 +47,8 @@ public class UserResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserTransfer getUser() {
-
+	public UserTransfer getUser()
+	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Object principal = authentication.getPrincipal();
 		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
@@ -71,8 +72,8 @@ public class UserResource {
 	@Path("authenticate")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public TokenTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password) {
-
+	public TokenTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password)
+	{
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(username, password);
 		Authentication authentication = this.authManager.authenticate(authenticationToken);
@@ -88,8 +89,8 @@ public class UserResource {
 	}
 
 
-	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
-
+	private Map<String, Boolean> createRoleMap(UserDetails userDetails)
+	{
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {
 			roles.put(authority.getAuthority(), Boolean.TRUE);
