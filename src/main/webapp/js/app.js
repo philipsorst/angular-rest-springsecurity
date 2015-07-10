@@ -1,6 +1,6 @@
-angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
+angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','restangular'])
 	.config(
-		[ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+		[ '$routeProvider', '$locationProvider', '$httpProvider','RestangularProvider', function($routeProvider, $locationProvider, $httpProvider, RestangularProvider) {
 			
 			$routeProvider.when('/create', {
 				templateUrl: 'partials/create.html',
@@ -63,8 +63,10 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		        		return config || $q.when(config);
 		        	}
 		        };
-		    }
-	    );
+		    });
+
+
+		    RestangularProvider.setBaseUrl('rest')
 		   
 		} ]
 		
@@ -101,9 +103,9 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		var authToken = $cookieStore.get('authToken');
 		if (authToken !== undefined) {
 			$rootScope.authToken = authToken;
-			UserService.get(function(user) {
+			UserService.get("").then(function(user) {
 				$rootScope.user = user;
-				$location.path(originalPath);
+				$location.path("/");
 			});
 		}
 		
@@ -113,11 +115,12 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 
 function IndexController($scope, NewsService) {
 	
-	$scope.newsEntries = NewsService.query();
-	
+	NewsService.getList().then(function(entries){
+		$scope.newsEntries = entries;
+	});
 	$scope.deleteEntry = function(newsEntry) {
-		newsEntry.$remove(function() {
-			$scope.newsEntries = NewsService.query();
+		newsEntry.remove().then(function() {
+			$scope.newsEntries = NewsService.getList().$object
 		});
 	};
 };
@@ -125,10 +128,12 @@ function IndexController($scope, NewsService) {
 
 function EditController($scope, $routeParams, $location, NewsService) {
 
-	$scope.newsEntry = NewsService.get({id: $routeParams.id});
-	
+	NewsService.get($routeParams.id).then(function(enrty){
+		$scope.newsEntry = enrty;
+	});
+
 	$scope.save = function() {
-		$scope.newsEntry.$save(function() {
+		$scope.newsEntry.post().then(function() {
 			$location.path('/');
 		});
 	};
@@ -137,10 +142,9 @@ function EditController($scope, $routeParams, $location, NewsService) {
 
 function CreateController($scope, $location, NewsService) {
 	
-	$scope.newsEntry = new NewsService();
-	
+
 	$scope.save = function() {
-		$scope.newsEntry.$save(function() {
+		NewsService.post($scope.newsEntry).then(function() {
 			$location.path('/');
 		});
 	};
@@ -150,39 +154,34 @@ function CreateController($scope, $location, NewsService) {
 function LoginController($scope, $rootScope, $location, $cookieStore, UserService) {
 	
 	$scope.rememberMe = false;
-	
+
 	$scope.login = function() {
-		UserService.authenticate($.param({username: $scope.username, password: $scope.password}), function(authenticationResult) {
+
+		UserService.customPOST($.param({username: $scope.username, password: $scope.password}),"authenticate",{},{'Content-Type': 'application/x-www-form-urlencoded'}).then(function(authenticationResult) {
 			var authToken = authenticationResult.token;
 			$rootScope.authToken = authToken;
+
 			if ($scope.rememberMe) {
 				$cookieStore.put('authToken', authToken);
 			}
-			UserService.get(function(user) {
+			UserService.get("").then(function(user) {
 				$rootScope.user = user;
 				$location.path("/");
 			});
+
 		});
 	};
 };
 
 
-var services = angular.module('exampleApp.services', ['ngResource']);
+var services = angular.module('exampleApp.services', []);
 
-services.factory('UserService', function($resource) {
+services.factory('UserService', function(Restangular) {
 	
-	return $resource('rest/user/:action', {},
-			{
-				authenticate: {
-					method: 'POST',
-					params: {'action' : 'authenticate'},
-					headers : {'Content-Type': 'application/x-www-form-urlencoded'}
-				},
-			}
-		);
+	return Restangular.all('user');
 });
 
-services.factory('NewsService', function($resource) {
+services.factory('NewsService', function(Restangular) {
 	
-	return $resource('rest/news/:id', {id: '@id'});
+	return Restangular.all('news');
 });
