@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.dontdrinkandroot.example</groupId>
 	<artifactId>angular-rest-springsecurity</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
