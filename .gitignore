@@ -2,3 +2,5 @@
 /target
 /.classpath
 /.project
+/.idea/
+/angular-rest-springsecurity.iml
