@@ -17,6 +17,7 @@
 		<org.hsqldb.version>2.3.2</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<junit.version>4.11</junit.version>
+		<powermockito.version>1.6.2</powermockito.version>
 		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
 	</properties>
 
@@ -41,6 +42,33 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<check>
+						true
+					</check>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<outputDirectory>${project.build.directory}/site/cobertura</outputDirectory>
+					<instrumentation>
+						<ignoreTrivial>true</ignoreTrivial>
+					</instrumentation>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -184,6 +212,20 @@
     		<version>${junit.version}</version>
     		<scope>test</scope>
     	</dependency>
+
+		  <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <version>${powermockito.version}</version>
+        <scope>test</scope>
+		  </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-mockito</artifactId>
+        <version>${powermockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+
 	</dependencies>
 	
 </project>
