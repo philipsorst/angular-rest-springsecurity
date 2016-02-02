@@ -18,6 +18,8 @@
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<junit.version>4.11</junit.version>
 		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
+		<testng.version>6.8.7</testng.version>
+		<designtests.version>0.9.1</designtests.version>
 	</properties>
 
 	<developers>
@@ -46,8 +48,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -171,19 +173,21 @@
 			<scope>provided</scope>
 		</dependency>
 
-    	<dependency>
-    		<groupId>org.springframework</groupId>
-    		<artifactId>spring-test</artifactId>
-    		<version>${spring.version}</version>
-    		<scope>test</scope>
-    	</dependency>
-    	
-    	<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<version>${junit.version}</version>
-    		<scope>test</scope>
-    	</dependency>
-	</dependencies>
-	
+
+        <!-- DESIGN TESTS FOR HIBERNATE (by http://github.com/tacianosilva) -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>br.edu.ufcg.splab</groupId>
+            <artifactId>designtests</artifactId>
+            <version>${designtests.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
 </project>
