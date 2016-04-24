@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.GenericFilterBean;
 
 
@@ -27,10 +26,9 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 		this.userService = userService;
 	}
 
-
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-			ServletException
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException
 	{
 		HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
@@ -45,14 +43,12 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 
 				UsernamePasswordAuthenticationToken authentication =
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
 
 		chain.doFilter(request, response);
 	}
-
 
 	private HttpServletRequest getAsHttpRequest(ServletRequest request)
 	{
@@ -62,7 +58,6 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 
 		return (HttpServletRequest) request;
 	}
-
 
 	private String extractAuthTokenFromRequest(HttpServletRequest httpRequest)
 	{
