@@ -2,16 +2,12 @@ body {
 	padding-top: 60px;
 }
 
-ng-hide {
-	display: none;
-}
-
 .loader {
 	font-size: 36px;
 	line-height: 36px;
 	font-weight: bold;
 	width: 200px;
-	height: 36px;
+	height: 92px;
 	text-align: center;
 	position: absolute;
 	top: 0;
