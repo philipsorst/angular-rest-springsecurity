@@ -1,5 +1,6 @@
 angular-rest-springsecurity
 ===========================
+The difference from master is added Spring AOP example for logging and monitoring.
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=shoxrocks&url=http://sorst.net/github/angular-rest-springsecurity&title=AngularJS REST Spring Security Example&language=&tags=github&category=software)
 
