@@ -12,15 +12,17 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * {@link AuthenticationEntryPoint} that rejects all requests with an unauthorized error message.
- * 
+ *
  * @author Philip W. Sorst <philip@sorst.net>
  */
 public class UnauthorizedEntryPoint implements AuthenticationEntryPoint
 {
 
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-			throws IOException, ServletException
+	public void commence(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException
 	{
 		response.sendError(
 				HttpServletResponse.SC_UNAUTHORIZED,

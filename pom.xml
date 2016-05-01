@@ -6,13 +6,12 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<!-- Spring Security is based on Spring 3.0.7 -->
-		<spring.version>3.2.8.RELEASE</spring.version>
-		<spring.security.version>3.2.3.RELEASE</spring.security.version>
-		<jersey.version>1.18.1</jersey.version>
+		<version.org.springframework.security>4.0.4.RELEASE</version.org.springframework.security>
+		<version.org.springframework>4.2.5.RELEASE</version.org.springframework>
+		<version.com.sun.jersey.contribs>1.19.1</version.com.sun.jersey.contribs>
+		<version.org.hibernate>4.2.21.Final</version.org.hibernate>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<javax.servlet-api.version>2.5</javax.servlet-api.version>
-		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 		<org.hsqldb.version>2.3.2</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
@@ -67,32 +66,26 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
+			<version>${version.org.springframework}</version>
 		</dependency>
 		
 		<!-- Huh? Spring Jdbc is suddenly marked as provided by spring-orm? -->
 		 <dependency>
 		     <groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
+			<version>${version.org.springframework}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
+			<version>${version.org.springframework}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-spring</artifactId>
-			<version>${jersey.version}</version>
+			<version>${version.com.sun.jersey.contribs}</version>
 			<!-- jersey-spring uses spring 2.5, we want to use 3.x instead -->
 			<exclusions>
 				<exclusion>
@@ -125,7 +118,7 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
-			<version>${jersey.version}</version>
+			<version>${version.com.sun.jersey.contribs}</version>
 		</dependency>
 		
 		<dependency>
@@ -143,7 +136,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${org.hibernate.version}</version>
+			<version>${version.org.hibernate}</version>
 		</dependency>
 
 		<dependency>
@@ -155,13 +148,13 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security.version}</version>
+			<version>${version.org.springframework.security}</version>
 		</dependency>
 		
 		<dependency>
         	<groupId>org.springframework.security</groupId>
         	<artifactId>spring-security-config</artifactId>
-        	<version>${spring.security.version}</version>
+        	<version>${version.org.springframework.security}</version>
     	</dependency>
     	
     	<dependency>
@@ -174,7 +167,7 @@
     	<dependency>
     		<groupId>org.springframework</groupId>
     		<artifactId>spring-test</artifactId>
-    		<version>${spring.version}</version>
+    		<version>${version.org.springframework}</version>
     		<scope>test</scope>
     	</dependency>
     	

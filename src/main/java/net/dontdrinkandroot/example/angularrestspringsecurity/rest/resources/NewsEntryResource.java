@@ -13,10 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
-import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,10 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
+import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Role;
 
 
 @Component
@@ -62,7 +62,6 @@ public class NewsEntryResource
 		return viewWriter.writeValueAsString(allEntries);
 	}
 
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
@@ -77,7 +76,6 @@ public class NewsEntryResource
 		return newsEntry;
 	}
 
-
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -87,7 +85,6 @@ public class NewsEntryResource
 
 		return this.newsEntryDao.save(newsEntry);
 	}
-
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -100,7 +97,6 @@ public class NewsEntryResource
 		return this.newsEntryDao.save(newsEntry);
 	}
 
-
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
@@ -111,23 +107,16 @@ public class NewsEntryResource
 		this.newsEntryDao.delete(id);
 	}
 
-
 	private boolean isAdmin()
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
+		if ((principal instanceof String) && ((String) principal).equals("anonymousUser")) {
 			return false;
 		}
 		UserDetails userDetails = (UserDetails) principal;
 
-		for (GrantedAuthority authority : userDetails.getAuthorities()) {
-			if (authority.toString().equals("admin")) {
-				return true;
-			}
-		}
-
-		return false;
+		return userDetails.getAuthorities().contains(Role.ADMIN);
 	}
 
 }
