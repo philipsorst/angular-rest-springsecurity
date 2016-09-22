@@ -1,6 +1,6 @@
+*.iml
+/.idea/
 /.settings
 /target
 /.classpath
 /.project
-/.idea/
-/angular-rest-springsecurity.iml

@@ -1,74 +1,70 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.GenericFilterBean;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 {
+    private final UserDetailsService userService;
 
-	private final UserDetailsService userService;
+    public AuthenticationTokenProcessingFilter(UserDetailsService userService)
+    {
+        this.userService = userService;
+    }
 
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException
+    {
+        HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
-	public AuthenticationTokenProcessingFilter(UserDetailsService userService)
-	{
-		this.userService = userService;
-	}
+        String authToken = this.extractAuthTokenFromRequest(httpRequest);
+        String userName = TokenUtils.getUserNameFromToken(authToken);
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException
-	{
-		HttpServletRequest httpRequest = this.getAsHttpRequest(request);
+        if (userName != null) {
 
-		String authToken = this.extractAuthTokenFromRequest(httpRequest);
-		String userName = TokenUtils.getUserNameFromToken(authToken);
+            UserDetails userDetails = this.userService.loadUserByUsername(userName);
 
-		if (userName != null) {
+            if (TokenUtils.validateToken(authToken, userDetails)) {
 
-			UserDetails userDetails = this.userService.loadUserByUsername(userName);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }
 
-			if (TokenUtils.validateToken(authToken, userDetails)) {
+        chain.doFilter(request, response);
+    }
 
-				UsernamePasswordAuthenticationToken authentication =
-						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			}
-		}
+    private HttpServletRequest getAsHttpRequest(ServletRequest request)
+    {
+        if (!(request instanceof HttpServletRequest)) {
+            throw new RuntimeException("Expecting an HTTP request");
+        }
 
-		chain.doFilter(request, response);
-	}
+        return (HttpServletRequest) request;
+    }
 
-	private HttpServletRequest getAsHttpRequest(ServletRequest request)
-	{
-		if (!(request instanceof HttpServletRequest)) {
-			throw new RuntimeException("Expecting an HTTP request");
-		}
-
-		return (HttpServletRequest) request;
-	}
-
-	private String extractAuthTokenFromRequest(HttpServletRequest httpRequest)
-	{
-		/* Get token from header */
-		String authToken = httpRequest.getHeader("X-Auth-Token");
+    private String extractAuthTokenFromRequest(HttpServletRequest httpRequest)
+    {
+        /* Get token from header */
+        String authToken = httpRequest.getHeader("X-Auth-Token");
 
 		/* If token not found get it from request parameter */
-		if (authToken == null) {
-			authToken = httpRequest.getParameter("token");
-		}
+        if (authToken == null) {
+            authToken = httpRequest.getParameter("token");
+        }
 
-		return authToken;
-	}
+        return authToken;
+    }
 }
