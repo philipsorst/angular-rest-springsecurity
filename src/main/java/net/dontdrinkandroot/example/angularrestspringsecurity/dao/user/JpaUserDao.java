@@ -2,7 +2,6 @@ package net.dontdrinkandroot.example.angularrestspringsecurity.dao.user;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.JpaDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,7 @@ public class JpaUserDao extends JpaDao<User, Long> implements UserDao
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    public User loadUserByUsername(String username) throws UsernameNotFoundException
     {
         User user = this.findByName(username);
         if (null == user) {

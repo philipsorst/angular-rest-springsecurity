@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * JPA Implementation of a {@link NewsEntryDao}.
  *
- * @author Philip W. Sorst <philip@sorst.net>
+ * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class JpaNewsEntryDao extends JpaDao<NewsEntry, Long> implements NewsEntryDao
 {

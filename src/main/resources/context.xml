@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="
-			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:security="http://www.springframework.org/schema/security"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
-			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd
+
+
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
@@ -62,6 +59,15 @@
 	
 	<bean id="userDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.user.JpaUserDao">
 	</bean>
+
+	<bean id="accessTokenDao"
+		  class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.accesstoken.JpaAccessTokenDao">
+	</bean>
+
+	<bean id="userService" class="net.dontdrinkandroot.example.angularrestspringsecurity.service.DaoUserService">
+		<constructor-arg ref="userDao"/>
+		<constructor-arg ref="accessTokenDao"/>
+	</bean>
 	
 	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
 		<constructor-arg ref="userDao" />
@@ -84,7 +90,7 @@
 	</bean>
 	
 	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider user-service-ref="userDao">
+		<security:authentication-provider user-service-ref="userService">
 			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
@@ -105,7 +111,7 @@
 	<bean id="unauthorizedEntryPoint" class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.UnauthorizedEntryPoint" />
 
 	<bean id="authenticationTokenProcessingFilter" class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.AuthenticationTokenProcessingFilter">
-		<constructor-arg ref="userDao" />
+		<constructor-arg ref="userService"/>
 	</bean>
 
 </beans>
