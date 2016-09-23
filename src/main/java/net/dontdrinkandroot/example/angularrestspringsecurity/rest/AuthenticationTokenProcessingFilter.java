@@ -1,9 +1,9 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
+import net.dontdrinkandroot.example.angularrestspringsecurity.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -15,9 +15,9 @@ import java.io.IOException;
 
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 {
-    private final UserDetailsService userService;
+    private final UserService userService;
 
-    public AuthenticationTokenProcessingFilter(UserDetailsService userService)
+    public AuthenticationTokenProcessingFilter(UserService userService)
     {
         this.userService = userService;
     }
@@ -28,17 +28,12 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
     {
         HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
-        String authToken = this.extractAuthTokenFromRequest(httpRequest);
-        String userName = TokenUtils.getUserNameFromToken(authToken);
-
-        if (userName != null) {
-
-            UserDetails userDetails = this.userService.loadUserByUsername(userName);
-
-            if (TokenUtils.validateToken(authToken, userDetails)) {
-
+        String accessToken = this.extractAuthTokenFromRequest(httpRequest);
+        if (null != accessToken) {
+            User user = this.userService.findUserByAccessToken(accessToken);
+            if (null != user) {
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

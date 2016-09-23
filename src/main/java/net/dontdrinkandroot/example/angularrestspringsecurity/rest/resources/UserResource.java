@@ -1,7 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
 
-import net.dontdrinkandroot.example.angularrestspringsecurity.rest.TokenUtils;
-import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.TokenTransfer;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.AccessToken;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
+import net.dontdrinkandroot.example.angularrestspringsecurity.service.UserService;
 import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.UserTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -19,12 +19,15 @@ import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 @Component
 @Path("/user")
 public class UserResource
 {
     @Autowired
-    private UserDetailsService userService;
+    private UserService userService;
 
     @Autowired
     @Qualifier("authenticationManager")
@@ -41,7 +44,7 @@ public class UserResource
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
-        if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
+        if (!(principal instanceof UserDetails)) {
             throw new WebApplicationException(401);
         }
         UserDetails userDetails = (UserDetails) principal;
@@ -50,29 +53,28 @@ public class UserResource
     }
 
     /**
-     * Authenticates a user and creates an authentication token.
+     * Authenticates a user and creates an access token.
      *
      * @param username The name of the user.
      * @param password The password of the user.
-     * @return A transfer containing the authentication token.
+     * @return The generated access token.
      */
     @Path("authenticate")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public TokenTransfer authenticate(@FormParam("username") String username, @FormParam("password") String password)
+    public AccessToken authenticate(@FormParam("username") String username, @FormParam("password") String password)
     {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = this.authManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		/*
-         * Reload user as password of authentication principal will be null after authorization and
-		 * password is needed for token generation
-		 */
-        UserDetails userDetails = this.userService.loadUserByUsername(username);
+        Object principal = authentication.getPrincipal();
+        if (!(principal instanceof User)) {
+            throw new WebApplicationException(401);
+        }
 
-        return new TokenTransfer(TokenUtils.createToken(userDetails));
+        return this.userService.createAccessToken((User) principal);
     }
 
     private Map<String, Boolean> createRoleMap(UserDetails userDetails)

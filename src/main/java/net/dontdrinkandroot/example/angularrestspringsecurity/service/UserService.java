@@ -1,5 +1,7 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.service;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.AccessToken;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -7,4 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService
 {
+    User findUserByAccessToken(String accessToken);
+
+    AccessToken createAccessToken(User user);
 }

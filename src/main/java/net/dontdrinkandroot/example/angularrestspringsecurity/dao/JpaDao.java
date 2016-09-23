@@ -74,4 +74,11 @@ public class JpaDao<T extends Entity, I> implements Dao<T, I>
 
         this.getEntityManager().remove(entity);
     }
+
+    @Override
+    @Transactional
+    public void delete(T entity)
+    {
+        this.getEntityManager().remove(entity);
+    }
 }

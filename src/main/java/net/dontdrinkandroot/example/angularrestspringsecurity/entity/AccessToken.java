@@ -62,4 +62,13 @@ public class AccessToken implements Entity
     {
         return this.expiry;
     }
+
+    public boolean isExpired()
+    {
+        if (null == this.expiry) {
+            return false;
+        }
+
+        return this.expiry.getTime() > System.currentTimeMillis();
+    }
 }

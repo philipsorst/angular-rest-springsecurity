@@ -13,4 +13,6 @@ public interface Dao<T extends Entity, I>
     T save(T newsEntry);
 
     void delete(I id);
+
+    void delete(T entity);
 }
