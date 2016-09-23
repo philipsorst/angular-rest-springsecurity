@@ -52,12 +52,12 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		        return {
 		        	'request': function(config) {
 		        		var isRestCall = config.url.indexOf('rest') == 0;
-		        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
-		        			var authToken = $rootScope.authToken;
-		        			if (exampleAppConfig.useAuthTokenHeader) {
-		        				config.headers['X-Auth-Token'] = authToken;
+		        		if (isRestCall && angular.isDefined($rootScope.accessToken)) {
+		        			var accessToken = $rootScope.accessToken;
+		        			if (exampleAppConfig.useAccessTokenHeader) {
+		        				config.headers['X-Access-Token'] = accessToken;
 		        			} else {
-		        				config.url = config.url + "?token=" + authToken;
+		        				config.url = config.url + "?token=" + accessToken;
 		        			}
 		        		}
 		        		return config || $q.when(config);
@@ -90,17 +90,17 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
-			delete $rootScope.authToken;
-			$cookieStore.remove('authToken');
+			delete $rootScope.accessToken;
+			$cookieStore.remove('accessToken');
 			$location.path("/login");
 		};
 		
 		 /* Try getting valid user from cookie or go to login page */
 		var originalPath = $location.path();
 		$location.path("/login");
-		var authToken = $cookieStore.get('authToken');
-		if (authToken !== undefined) {
-			$rootScope.authToken = authToken;
+		var accessToken = $cookieStore.get('accessToken');
+		if (accessToken !== undefined) {
+			$rootScope.accessToken = accessToken;
 			UserService.get(function(user) {
 				$rootScope.user = user;
 				$location.path(originalPath);
@@ -153,10 +153,10 @@ function LoginController($scope, $rootScope, $location, $cookieStore, UserServic
 	
 	$scope.login = function() {
 		UserService.authenticate($.param({username: $scope.username, password: $scope.password}), function(authenticationResult) {
-			var authToken = authenticationResult.token;
-			$rootScope.authToken = authToken;
+			var accessToken = authenticationResult.token;
+			$rootScope.accessToken = accessToken;
 			if ($scope.rememberMe) {
-				$cookieStore.put('authToken', authToken);
+				$cookieStore.put('accessToken', accessToken);
 			}
 			UserService.get(function(user) {
 				$rootScope.user = user;
