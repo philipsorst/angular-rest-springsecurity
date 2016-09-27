@@ -1,8 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.dao;
 
-import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
+import net.dontdrinkandroot.example.angularrestspringsecurity.dao.blogpost.BlogPostDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.user.UserDao;
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.BlogPost;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Role;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class DataBaseInitializer
 {
-    private NewsEntryDao newsEntryDao;
+    private BlogPostDao blogPostDao;
 
     private UserDao userDao;
 
@@ -27,10 +27,10 @@ public class DataBaseInitializer
         /* Default constructor for reflection instantiation */
     }
 
-    public DataBaseInitializer(UserDao userDao, NewsEntryDao newsEntryDao, PasswordEncoder passwordEncoder)
+    public DataBaseInitializer(UserDao userDao, BlogPostDao blogPostDao, PasswordEncoder passwordEncoder)
     {
         this.userDao = userDao;
-        this.newsEntryDao = newsEntryDao;
+        this.blogPostDao = blogPostDao;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -47,10 +47,10 @@ public class DataBaseInitializer
 
         long timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 24);
         for (int i = 0; i < 10; i++) {
-            NewsEntry newsEntry = new NewsEntry();
-            newsEntry.setContent("This is example content " + i);
-            newsEntry.setDate(new Date(timestamp));
-            this.newsEntryDao.save(newsEntry);
+            BlogPost blogPost = new BlogPost();
+            blogPost.setContent("This is example content " + i);
+            blogPost.setDate(new Date(timestamp));
+            this.blogPostDao.save(blogPost);
             timestamp += 1000 * 60 * 60;
         }
     }

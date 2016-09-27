@@ -1,7 +1,7 @@
-package net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry;
+package net.dontdrinkandroot.example.angularrestspringsecurity.dao.blogpost;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.JpaDao;
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.BlogPost;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
@@ -11,28 +11,28 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
- * JPA Implementation of a {@link NewsEntryDao}.
+ * JPA Implementation of a {@link BlogPostDao}.
  *
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class JpaNewsEntryDao extends JpaDao<NewsEntry, Long> implements NewsEntryDao
+public class JpaBlogPostDao extends JpaDao<BlogPost, Long> implements BlogPostDao
 {
-    public JpaNewsEntryDao()
+    public JpaBlogPostDao()
     {
-        super(NewsEntry.class);
+        super(BlogPost.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<NewsEntry> findAll()
+    public List<BlogPost> findAll()
     {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
-        final CriteriaQuery<NewsEntry> criteriaQuery = builder.createQuery(NewsEntry.class);
+        final CriteriaQuery<BlogPost> criteriaQuery = builder.createQuery(BlogPost.class);
 
-        Root<NewsEntry> root = criteriaQuery.from(NewsEntry.class);
+        Root<BlogPost> root = criteriaQuery.from(BlogPost.class);
         criteriaQuery.orderBy(builder.desc(root.get("date")));
 
-        TypedQuery<NewsEntry> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
+        TypedQuery<BlogPost> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
         return typedQuery.getResultList();
     }
 }

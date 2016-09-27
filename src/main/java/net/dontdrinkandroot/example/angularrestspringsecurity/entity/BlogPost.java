@@ -9,12 +9,12 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * JPA Annotated Pojo that represents a news entry.
+ * JPA Annotated Pojo that represents a blog post.
  *
  * @author Philip W. Sorst <philip@sorst.net>
  */
 @javax.persistence.Entity
-public class NewsEntry implements Entity
+public class BlogPost implements Entity
 {
     @Id
     @GeneratedValue
@@ -26,7 +26,7 @@ public class NewsEntry implements Entity
     @Column
     private String content;
 
-    public NewsEntry()
+    public BlogPost()
     {
         this.date = new Date();
     }
@@ -62,6 +62,6 @@ public class NewsEntry implements Entity
     @Override
     public String toString()
     {
-        return String.format("NewsEntry[%d, %s]", this.id, this.content);
+        return String.format("BlogPost[%d, %s]", this.id, this.content);
     }
 }

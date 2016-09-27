@@ -1,8 +1,8 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
-import net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.NewsEntryDao;
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
+import net.dontdrinkandroot.example.angularrestspringsecurity.dao.blogpost.BlogPostDao;
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.BlogPost;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Role;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -20,13 +20,13 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-@Path("/news")
-public class NewsEntryResource
+@Path("/blogposts")
+public class BlogPostResource
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private NewsEntryDao newsEntryDao;
+    private BlogPostDao blogPostDao;
 
     @Autowired
     private ObjectMapper mapper;
@@ -43,7 +43,7 @@ public class NewsEntryResource
         } else {
             viewWriter = this.mapper.writerWithView(JsonViews.User.class);
         }
-        List<NewsEntry> allEntries = this.newsEntryDao.findAll();
+        List<BlogPost> allEntries = this.blogPostDao.findAll();
 
         return viewWriter.writeValueAsString(allEntries);
     }
@@ -51,36 +51,36 @@ public class NewsEntryResource
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public NewsEntry read(@PathParam("id") Long id)
+    public BlogPost read(@PathParam("id") Long id)
     {
         this.logger.info("read(id)");
 
-        NewsEntry newsEntry = this.newsEntryDao.find(id);
-        if (newsEntry == null) {
+        BlogPost blogPost = this.blogPostDao.find(id);
+        if (blogPost == null) {
             throw new WebApplicationException(404);
         }
-        return newsEntry;
+        return blogPost;
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public NewsEntry create(NewsEntry newsEntry)
+    public BlogPost create(BlogPost blogPost)
     {
-        this.logger.info("create(): " + newsEntry);
+        this.logger.info("create(): " + blogPost);
 
-        return this.newsEntryDao.save(newsEntry);
+        return this.blogPostDao.save(blogPost);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public NewsEntry update(@PathParam("id") Long id, NewsEntry newsEntry)
+    public BlogPost update(@PathParam("id") Long id, BlogPost blogPost)
     {
-        this.logger.info("update(): " + newsEntry);
+        this.logger.info("update(): " + blogPost);
 
-        return this.newsEntryDao.save(newsEntry);
+        return this.blogPostDao.save(blogPost);
     }
 
     @DELETE
@@ -90,7 +90,7 @@ public class NewsEntryResource
     {
         this.logger.info("delete(id)");
 
-        this.newsEntryDao.delete(id);
+        this.blogPostDao.delete(id);
     }
 
     private boolean isAdmin()

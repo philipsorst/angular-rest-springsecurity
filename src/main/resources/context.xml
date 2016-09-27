@@ -53,8 +53,8 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
-	<bean id="newsEntryDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.newsentry.JpaNewsEntryDao">
+
+	<bean id="blogPostDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.blogpost.JpaBlogPostDao">
 	</bean>
 	
 	<bean id="userDao" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.user.JpaUserDao">
@@ -71,7 +71,7 @@
 	
 	<bean id="dataBaseInitializer" class="net.dontdrinkandroot.example.angularrestspringsecurity.dao.DataBaseInitializer" init-method="initDataBase">
 		<constructor-arg ref="userDao" />
-		<constructor-arg ref="newsEntryDao" />
+		<constructor-arg ref="blogPostDao"/>
 		<constructor-arg ref="passwordEncoder" />
 	</bean>
 
@@ -102,10 +102,10 @@
 		<security:csrf disabled="true"/>
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="PRE_AUTH_FILTER" />
 		<security:intercept-url pattern="/rest/user/authenticate" access="permitAll" />
-		<security:intercept-url method="GET" pattern="/rest/news/**" access="hasRole('USER')" />
-		<security:intercept-url method="PUT" pattern="/rest/news/**" access="hasRole('ADMIN')" />
-		<security:intercept-url method="POST" pattern="/rest/news/**" access="hasRole('ADMIN')" />
-		<security:intercept-url method="DELETE" pattern="/rest/news/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/rest/blogposts/**" access="hasRole('USER')"/>
+		<security:intercept-url method="PUT" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
+		<security:intercept-url method="POST" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
+		<security:intercept-url method="DELETE" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
 	</security:http>
 
 	<bean id="unauthorizedEntryPoint" class="net.dontdrinkandroot.example.angularrestspringsecurity.rest.UnauthorizedEntryPoint" />

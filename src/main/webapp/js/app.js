@@ -111,36 +111,36 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 	});
 
 
-function IndexController($scope, NewsService) {
-	
-	$scope.newsEntries = NewsService.query();
-	
-	$scope.deleteEntry = function(newsEntry) {
-		newsEntry.$remove(function() {
-			$scope.newsEntries = NewsService.query();
+function IndexController($scope, BlogPostService) {
+
+	$scope.blogPosts = BlogPostService.query();
+
+	$scope.deletePost = function (blogPost) {
+		blogPost.$remove(function () {
+			$scope.blogPosts = BlogPostService.query();
 		});
 	};
-};
+}
 
 
-function EditController($scope, $routeParams, $location, NewsService) {
+function EditController($scope, $routeParams, $location, BlogPostService) {
 
-	$scope.newsEntry = NewsService.get({id: $routeParams.id});
+	$scope.blogPost = BlogPostService.get({id: $routeParams.id});
 	
 	$scope.save = function() {
-		$scope.newsEntry.$save(function() {
+		$scope.blogPost.$save(function () {
 			$location.path('/');
 		});
 	};
-};
+}
 
 
-function CreateController($scope, $location, NewsService) {
-	
-	$scope.newsEntry = new NewsService();
+function CreateController($scope, $location, BlogPostService) {
+
+	$scope.blogPost = new BlogPostService();
 	
 	$scope.save = function() {
-		$scope.newsEntry.$save(function() {
+		$scope.blogPost.$save(function () {
 			$location.path('/');
 		});
 	};
@@ -177,12 +177,12 @@ services.factory('UserService', function($resource) {
 					method: 'POST',
 					params: {'action' : 'authenticate'},
 					headers : {'Content-Type': 'application/x-www-form-urlencoded'}
-				},
+				}
 			}
 		);
 });
 
-services.factory('NewsService', function($resource) {
-	
-	return $resource('rest/news/:id', {id: '@id'});
+services.factory('BlogPostService', function ($resource) {
+
+	return $resource('rest/blogposts/:id', {id: '@id'});
 });
