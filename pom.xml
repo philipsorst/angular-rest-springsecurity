@@ -16,8 +16,8 @@
 		<org.hsqldb.version>2.3.2</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<junit.version>4.11</junit.version>
-		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
-	</properties>
+        <jetty-maven-plugin.version>8.1.16.v20140903</jetty-maven-plugin.version>
+    </properties>
 
 	<developers>
 		<developer>
@@ -49,11 +49,16 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${org.eclipse.jetty.jetty-maven-plugin.version}</version>
-			</plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty-maven-plugin.version}</version>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>/${project.artifactId}</contextPath>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	
