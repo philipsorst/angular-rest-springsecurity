@@ -10,6 +10,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
+/**
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 public class JpaDao<T extends Entity, I> implements Dao<T, I>
 {
     private EntityManager entityManager;

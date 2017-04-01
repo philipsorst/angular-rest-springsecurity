@@ -12,6 +12,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+/**
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 public class JpaUserDao extends JpaDao<User, Long> implements UserDao
 {
     public JpaUserDao()

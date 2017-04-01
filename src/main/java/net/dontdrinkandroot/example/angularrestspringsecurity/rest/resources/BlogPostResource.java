@@ -16,9 +16,13 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 @Component
 @Path("/blogposts")
 public class BlogPostResource
@@ -57,8 +61,9 @@ public class BlogPostResource
 
         BlogPost blogPost = this.blogPostDao.find(id);
         if (blogPost == null) {
-            throw new WebApplicationException(404);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return blogPost;
     }
 
@@ -97,9 +102,11 @@ public class BlogPostResource
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
-        if ((principal instanceof String) && ((String) principal).equals("anonymousUser")) {
+
+        if (!(principal instanceof UserDetails)) {
             return false;
         }
+
         UserDetails userDetails = (UserDetails) principal;
 
         return userDetails.getAuthorities().contains(Role.ADMIN);

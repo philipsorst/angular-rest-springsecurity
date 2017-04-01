@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 @javax.persistence.Entity
 public class User implements Entity, UserDetails
 {

@@ -13,6 +13,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * @author Philip Washington Sorst <philip@sorst.net>
+ */
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 {
     private final UserService userService;
@@ -28,7 +31,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
     {
         HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
-        String accessToken = this.extractAuthTokenFromRequest(httpRequest);
+        String accessToken = this.extractAccessTokenFromRequest(httpRequest);
         if (null != accessToken) {
             User user = this.userService.findUserByAccessToken(accessToken);
             if (null != user) {
@@ -50,7 +53,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
         return (HttpServletRequest) request;
     }
 
-    private String extractAuthTokenFromRequest(HttpServletRequest httpRequest)
+    private String extractAccessTokenFromRequest(HttpServletRequest httpRequest)
     {
         /* Get token from header */
         String authToken = httpRequest.getHeader("X-Access-Token");

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class UserResource
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         if (!(principal instanceof UserDetails)) {
-            throw new WebApplicationException(401);
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
         UserDetails userDetails = (UserDetails) principal;
 
@@ -71,7 +72,7 @@ public class UserResource
 
         Object principal = authentication.getPrincipal();
         if (!(principal instanceof User)) {
-            throw new WebApplicationException(401);
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         return this.userService.createAccessToken((User) principal);

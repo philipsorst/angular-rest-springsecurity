@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * JPA Annotated Pojo that represents a blog post.
  *
- * @author Philip W. Sorst <philip@sorst.net>
+ * @author Philip Washington Sorst <philip@sorst.net>
  */
 @javax.persistence.Entity
 public class BlogPost implements Entity
