@@ -6,16 +6,16 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.org.springframework.security>4.0.4.RELEASE</version.org.springframework.security>
-		<version.org.springframework>4.2.5.RELEASE</version.org.springframework>
-		<version.com.sun.jersey.contribs>1.19.1</version.com.sun.jersey.contribs>
-		<version.org.hibernate>4.2.21.Final</version.org.hibernate>
-		<org.slf4j.version>1.7.7</org.slf4j.version>
+		<version.org.springframework.security>4.2.2.RELEASE</version.org.springframework.security>
+		<version.org.springframework>4.3.7.RELEASE</version.org.springframework>
+		<version.com.sun.jersey.contribs>1.19.3</version.com.sun.jersey.contribs>
+		<version.org.hibernate>5.2.9.Final</version.org.hibernate>
+		<org.slf4j.version>1.7.25</org.slf4j.version>
 		<javax.servlet-api.version>2.5</javax.servlet-api.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-		<org.hsqldb.version>2.3.2</org.hsqldb.version>
+		<org.hsqldb.version>2.3.4</org.hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 		<org.eclipse.jetty.jetty-maven-plugin.version>9.1.1.v20140108</org.eclipse.jetty.jetty-maven-plugin.version>
 	</properties>
 
