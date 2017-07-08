@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
-import org.codehaus.jackson.map.annotate.JsonView;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

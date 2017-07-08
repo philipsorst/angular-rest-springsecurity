@@ -1,11 +1,11 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.blogpost.BlogPostDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.BlogPost;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Role;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
