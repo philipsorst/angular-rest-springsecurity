@@ -4,3 +4,5 @@
 /target
 /.classpath
 /.project
+/angular/node_modules
+/src/main/resources/public/*
