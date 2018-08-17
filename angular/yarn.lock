@@ -130,6 +130,12 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/common@~6.0.5":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-6.0.9.tgz#e12fc4ea74cdb9f007af1098d3573c8d5441680a"
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/compiler-cli@^6.1.0":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-6.1.3.tgz#f8454d140b875454a9e58944a008ee2592638700"
@@ -148,6 +154,12 @@
 "@angular/core@^6.1.0":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.1.3.tgz#6561ba0b40a12758e5237fc05186b56d6d0bdbc9"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/core@~6.0.5":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.0.9.tgz#a68cc0f5ddffa535df65f3e798ba2fcd6f6eec1b"
   dependencies:
     tslib "^1.9.0"
 
@@ -466,6 +478,15 @@ align-text@^0.1.1, align-text@^0.1.3:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular4-hal@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/angular4-hal/-/angular4-hal-6.1.0.tgz#15a229cf295620f361d55a68b280ddd00f868f8c"
+  dependencies:
+    "@angular/common" "~6.0.5"
+    "@angular/core" "~6.0.5"
+    rxjs "~6.2.1"
+    zone.js "^0.8.18"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -3670,6 +3691,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+material-design-icons@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/material-design-icons/-/material-design-icons-3.0.1.tgz#9a71c48747218ebca51e51a66da682038cdcb7bf"
+
 math-random@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.1.tgz#8b3aac588b8a66e4975e3cdea67f7bb329601fac"
@@ -5027,7 +5052,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.0.0:
+rxjs@^6.0.0, rxjs@~6.2.1:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
   dependencies:
@@ -6457,6 +6482,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@~0.8.26:
+zone.js@^0.8.18, zone.js@~0.8.26:
   version "0.8.26"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.26.tgz#7bdd72f7668c5a7ad6b118148b4ea39c59d08d2d"
