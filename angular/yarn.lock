@@ -97,7 +97,7 @@
     "@angular-devkit/core" "0.7.4"
     rxjs "^6.0.0"
 
-"@angular/animations@^6.1.3":
+"@angular/animations@^6.1.1", "@angular/animations@^6.1.3":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-6.1.3.tgz#c7b1cf407e5087a499532999cb412a546f9ba855"
   dependencies:
@@ -109,7 +109,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@~6.1.4":
+"@angular/cli@^6.1.2", "@angular/cli@~6.1.4":
   version "6.1.4"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.1.4.tgz#1ec6d7639e31eaf6247c5146814fd2aa099eb2bb"
   dependencies:
@@ -124,15 +124,9 @@
     symbol-observable "^1.2.0"
     yargs-parser "^10.0.0"
 
-"@angular/common@^6.1.0":
+"@angular/common@^6.1.0", "@angular/common@~6.1.1":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-6.1.3.tgz#ae3d45224348fd8b682c104ced6345e7bd7e2a64"
-  dependencies:
-    tslib "^1.9.0"
-
-"@angular/common@~6.0.5":
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-6.0.9.tgz#e12fc4ea74cdb9f007af1098d3573c8d5441680a"
   dependencies:
     tslib "^1.9.0"
 
@@ -151,15 +145,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/core@^6.1.0":
+"@angular/core@^6.1.0", "@angular/core@~6.1.1":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.1.3.tgz#6561ba0b40a12758e5237fc05186b56d6d0bdbc9"
-  dependencies:
-    tslib "^1.9.0"
-
-"@angular/core@~6.0.5":
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.0.9.tgz#a68cc0f5ddffa535df65f3e798ba2fcd6f6eec1b"
   dependencies:
     tslib "^1.9.0"
 
@@ -187,13 +175,13 @@
   optionalDependencies:
     parse5 "^5.0.0"
 
-"@angular/platform-browser-dynamic@^6.1.0":
+"@angular/platform-browser-dynamic@^6.1.0", "@angular/platform-browser-dynamic@^6.1.1":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-6.1.3.tgz#108c42b7eeee57325b686008323d8ddc46addd8c"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@^6.1.0":
+"@angular/platform-browser@^6.1.0", "@angular/platform-browser@^6.1.1":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-6.1.3.tgz#b918dfd05250e47c650dfe70f65173c65caaab91"
   dependencies:
@@ -478,15 +466,6 @@ align-text@^0.1.1, align-text@^0.1.3:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
-
-angular4-hal@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/angular4-hal/-/angular4-hal-6.1.0.tgz#15a229cf295620f361d55a68b280ddd00f868f8c"
-  dependencies:
-    "@angular/common" "~6.0.5"
-    "@angular/core" "~6.0.5"
-    rxjs "~6.2.1"
-    zone.js "^0.8.18"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -2599,6 +2578,19 @@ globule@^1.0.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+hal-4-angular@^6.1.0:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/hal-4-angular/-/hal-4-angular-6.1.2.tgz#35bbdde8f59494bc7969622a66ea14eda4620aa4"
+  dependencies:
+    "@angular/animations" "^6.1.1"
+    "@angular/cli" "^6.1.2"
+    "@angular/common" "~6.1.1"
+    "@angular/core" "~6.1.1"
+    "@angular/platform-browser" "^6.1.1"
+    "@angular/platform-browser-dynamic" "^6.1.1"
+    rxjs "~6.2.2"
+    zone.js "^0.8.18"
 
 hammerjs@^2.0.8:
   version "2.0.8"
@@ -5052,7 +5044,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.0.0, rxjs@~6.2.1:
+rxjs@^6.0.0, rxjs@~6.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
   dependencies:

@@ -10,6 +10,7 @@ import {BlogPostDetailComponent} from '../blog-post/blog-post-detail.component';
 import {MatListModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import {ExternalConfigurationService} from "../rest/external-configuration.service";
+import {AngularHalModule} from "hal-4-angular";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {ExternalConfigurationService} from "../rest/external-configuration.servi
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    AngularHalModule.forRoot(),
     BrowserAnimationsModule,
     MatSidenavModule,
     MatListModule,

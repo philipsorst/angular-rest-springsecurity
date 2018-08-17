@@ -18,6 +18,11 @@ export class BlogPostListComponent implements OnInit
    */
   public ngOnInit()
   {
+    this.blogPostService.getAll().subscribe((sdf) => {
+      console.log('adfs', sdf);
+    });
+
+    console.log('testt', this.blogPostService);
     this.blogPostService.page(1).subscribe((blogPosts: BlogPost[]) => {
       console.log('blogPosts', blogPosts);
     })

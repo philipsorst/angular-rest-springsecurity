@@ -1,5 +1,5 @@
 import {User} from "../user/user";
-import {Resource} from "angular4-hal";
+import {Resource} from "hal-4-angular";
 
 export class BlogPost extends Resource
 {
