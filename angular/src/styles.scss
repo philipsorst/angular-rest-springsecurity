@@ -2,10 +2,70 @@
 @import "~material-design-icons/iconfont/material-icons.css";
 
 html, body {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+app-sidenav-toggle {
+    margin-right: 16px;
+}
+
+.mat-drawer {
+    max-width: 80vw;
+    min-width: 300px;
+}
+
+mat-sidenav-content {
+    mat-toolbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    padding-top: 64px;
+    padding-bottom: 64px;
+    min-height: calc(100vh - 128px);
+}
+
+.screen-medium {
+    app-sidenav-toggle {
+        display: none;
+    }
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.m-full {
+    margin: 24px;
+}
+
+.mt-full {
+    margin-top: 24px;
+}
+
+.mr-full {
+    margin-right: 24px;
+}
+
+.mb-full {
+    margin-bottom: 24px;
+}
+
+.ml-full {
+    margin-left: 24px;
+}
+
+.nl2br {
+    white-space: pre;
 }

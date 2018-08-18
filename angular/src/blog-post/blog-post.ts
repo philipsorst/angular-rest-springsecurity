@@ -9,4 +9,5 @@ export class BlogPost extends Resource
   lastModified: number;
   slug: string;
   title: string;
+    comments: Comment[];
 }

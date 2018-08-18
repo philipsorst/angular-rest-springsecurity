@@ -16,7 +16,7 @@ public class BlogPost
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String slug;
 
     @Column(nullable = false)

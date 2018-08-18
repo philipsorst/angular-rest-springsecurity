@@ -1,3 +1,24 @@
-<p>
-  blog-post-detail works!
-</p>
+<mat-toolbar color="primary" id="main-toolbar">
+    <app-sidenav-toggle></app-sidenav-toggle>
+    <h1 *ngIf="!loading && null != blogPost">{{blogPost.title}}</h1>
+</mat-toolbar>
+
+<mat-spinner class="ml-auto mr-auto" [diameter]="48" *ngIf="loading"></mat-spinner>
+
+<mat-card *ngIf="!loading && null != blogPost" class="m-full">
+    {{blogPost.created|date:'medium'}}
+</mat-card>
+
+<mat-card *ngIf="!loading && null != blogPost" class="m-full">
+    <mat-card-content class="nl2br">
+        {{blogPost.content}}
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="m-full"
+          *ngIf="!loading && null != blogPost && null != blogPost.comments && blogPost.comments.length > 0">
+    <mat-card-title>Comments</mat-card-title>
+    <mat-list>
+        <mat-list-item *ngFor="let comment of blogPost.comments" class="nl2br">{{comment.content}}</mat-list-item>
+    </mat-list>
+</mat-card>

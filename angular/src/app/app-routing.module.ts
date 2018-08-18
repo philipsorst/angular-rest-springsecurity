@@ -18,7 +18,7 @@ const routes: Routes = [
         component: BlogPostListComponent
       },
       {
-        path: ':id',
+          path: ':slug',
         component: BlogPostDetailComponent
       }
     ]

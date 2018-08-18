@@ -1,12 +1,13 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {SidenavService} from "../sidenav/sidenav.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent
+export class AppComponent implements OnInit
 {
   @ViewChild('sidenav')
   public sidenav: MatSidenav;
@@ -17,7 +18,7 @@ export class AppComponent
 
   public large: boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver)
+    constructor(private sidenavService: SidenavService, private breakpointObserver: BreakpointObserver)
   {
     breakpointObserver.observe('(min-width: 600px)').subscribe(result => {
       this.small = result.matches;
@@ -31,4 +32,12 @@ export class AppComponent
       this.large = result.matches;
     });
   }
+
+    /**
+     * @override
+     */
+    public ngOnInit()
+    {
+        this.sidenavService.setSidenav(this.sidenav);
+    }
 }
