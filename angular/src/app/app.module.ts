@@ -4,9 +4,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NotFoundComponent} from '../not-found/not-found.component';
-import {BlogPostListComponent} from '../blog-post/blog-post-list.component';
-import {BlogPostDetailComponent} from '../blog-post/blog-post-detail.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {BlogPostListComponent} from './blog-post/blog-post-list.component';
+import {BlogPostDetailComponent} from './blog-post/blog-post-detail.component';
 import {
     MatButtonModule,
     MatCardModule,
@@ -18,9 +18,9 @@ import {
     MatToolbarModule
 } from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
-import {ExternalConfigurationService} from "../rest/external-configuration.service";
+import {ExternalConfigurationService} from "./rest/external-configuration.service";
 import {AngularHalModule} from "hal-4-angular";
-import {SidenavToggleComponent} from "../sidenav/sidenav-toggle.component";
+import {SidenavToggleComponent} from "./sidenav/sidenav-toggle.component";
 
 @NgModule({
     declarations: [

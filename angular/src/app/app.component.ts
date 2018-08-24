@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {SidenavService} from "../sidenav/sidenav.service";
+import {SidenavService} from "./sidenav/sidenav.service";
 
 @Component({
   selector: 'app-root',
