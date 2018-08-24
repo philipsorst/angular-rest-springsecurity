@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BlogPostService} from "./blog-post.service";
 import {BlogPost} from "./blog-post";
 import {MatSnackBar} from "@angular/material";
+import {CollectionResult} from "../rest/collection-result";
 
 @Component({
     selector: 'app-blog-post-list',
@@ -24,12 +25,12 @@ export class BlogPostListComponent implements OnInit
     public ngOnInit()
     {
         this.loading = true;
-        this.blogPostService.getAll({sort: [{path: 'created', order: 'DESC'}]}).subscribe(
-            (blogPosts: BlogPost[]) => {
-                this.blogPosts = blogPosts;
+        this.blogPostService.list(0, null, [{property: 'created', direction: 'DESC'}]).subscribe(
+            (result: CollectionResult<BlogPost>) => {
+                this.blogPosts = result.entries;
             },
             (error) => {
-                this.snackbar.open('Could not load blog psots', 'OK');
+                this.snackbar.open('Could not load blog posts', 'OK');
             },
             () => {
                 this.loading = false;

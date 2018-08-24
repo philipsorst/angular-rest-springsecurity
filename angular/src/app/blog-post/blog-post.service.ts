@@ -1,14 +1,15 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BlogPost} from "./blog-post";
-import {RestService} from "hal-4-angular";
+import {RestResourceService} from "../rest/rest-resource.service";
+import {HalApiService} from "../rest/hal-api.service";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class BlogPostService extends RestService<BlogPost>
+export class BlogPostService extends RestResourceService<BlogPost>
 {
-  constructor(injector: Injector)
-  {
-    super(BlogPost, 'blog-posts', injector);
-  }
+    constructor(protected halApiService: HalApiService)
+    {
+        super(halApiService, 'blog-posts');
+    }
 }

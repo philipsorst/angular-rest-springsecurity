@@ -1,7 +1,7 @@
 export class Pagination
 {
   page: number;
-  perPage: number;
-  total: number;
+    size: number;
+    totalElements: number;
   totalPages: number;
 }

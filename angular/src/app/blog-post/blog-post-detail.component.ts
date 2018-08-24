@@ -29,7 +29,7 @@ export class BlogPostDetailComponent implements OnInit, OnDestroy
         this.loading = true;
         this.routeParamsSubscription = this.route.params.subscribe((params) => {
             this.loading = true;
-            this.blogPostService.get(params.slug).subscribe(
+            this.blogPostService.find(params.slug, 'detail').subscribe(
                 (blogPost: BlogPost) => {
                     this.blogPost = blogPost;
                 },

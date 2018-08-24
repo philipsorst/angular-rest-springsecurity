@@ -18,9 +18,8 @@ import {
     MatToolbarModule
 } from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
-import {ExternalConfigurationService} from "./rest/external-configuration.service";
-import {AngularHalModule} from "hal-4-angular";
 import {SidenavToggleComponent} from "./sidenav/sidenav-toggle.component";
+import {REST_API_BASE} from "./rest/hal-api.service";
 
 @NgModule({
     declarations: [
@@ -34,7 +33,6 @@ import {SidenavToggleComponent} from "./sidenav/sidenav-toggle.component";
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        AngularHalModule.forRoot(),
         BrowserAnimationsModule,
         MatSidenavModule,
         MatListModule,
@@ -46,7 +44,7 @@ import {SidenavToggleComponent} from "./sidenav/sidenav-toggle.component";
         MatSnackBarModule
     ],
     providers: [
-        {provide: 'ExternalConfigurationService', useClass: ExternalConfigurationService},
+        {provide: REST_API_BASE, useValue: 'http://localhost:8080/api/'}
     ],
     bootstrap: [AppComponent]
 })

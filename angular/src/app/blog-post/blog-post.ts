@@ -1,13 +1,13 @@
 import {User} from "../user/user";
-import {Resource} from "hal-4-angular";
+import {Comment} from "../comment/comment";
 
-export class BlogPost extends Resource
+export class BlogPost
 {
-  author: User;
-  content: string;
-  created: number;
-  lastModified: number;
-  slug: string;
-  title: string;
+    author: User;
+    content: string;
+    created: number;
+    lastModified: number;
+    slug: string;
+    title: string;
     comments: Comment[];
 }

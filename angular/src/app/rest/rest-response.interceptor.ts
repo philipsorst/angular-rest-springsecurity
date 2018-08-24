@@ -29,9 +29,9 @@ export class RestResponseInterceptor implements HttpInterceptor
       let result = new CollectionResult();
       result.pagination = {
         page: body['page'].number,
-        perPage: body['page'].size,
+          size: body['page'].size,
         totalPages: body['page'].totalPages,
-        total: body['page'].totalElements
+          totalElements: body['page'].totalElements
       };
 
       let propertyNames = Object.getOwnPropertyNames(body['_embedded']);

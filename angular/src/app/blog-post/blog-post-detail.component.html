@@ -6,7 +6,7 @@
 <mat-spinner class="ml-auto mr-auto" [diameter]="48" *ngIf="loading"></mat-spinner>
 
 <mat-card *ngIf="!loading && null != blogPost" class="m-full">
-    {{blogPost.created|date:'medium'}}
+    {{blogPost.author.username}} / {{blogPost.created|date:'medium'}}
 </mat-card>
 
 <mat-card *ngIf="!loading && null != blogPost" class="m-full">
