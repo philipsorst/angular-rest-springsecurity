@@ -18,6 +18,8 @@ public class Users implements Fixture
         for (int i = 0; i < 50; i++) {
             User user = new User();
             user.setUsername(faker.name().username());
+            user.setFirstName(faker.name().firstName());
+            user.setLastName(faker.name().lastName());
             entityManager.persist(user);
 
             referenceRepository.store("user-" + i, user);

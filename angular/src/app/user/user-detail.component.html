@@ -1,11 +1,11 @@
 <mat-toolbar color="primary" id="main-toolbar">
     <app-sidenav-toggle></app-sidenav-toggle>
-    <h1>Blog Posts</h1>
+    <h1 *ngIf="!loading && null != user">{{user.username}}</h1>
 </mat-toolbar>
 
-<mat-spinner class="ml-auto mr-auto mt-full" [diameter]="48" *ngIf="loading"></mat-spinner>
+<mat-spinner class="ml-auto mr-auto mt-auto" [diameter]="48" *ngIf="loading || blogPostsLoading"></mat-spinner>
 
-<ng-container *ngIf="!loading">
+<ng-container *ngIf="!blogPostsLoading">
     <mat-card *ngFor="let blogPost of blogPosts" class="m-full">
         <mat-card-title>{{blogPost.title}}</mat-card-title>
         <mat-card-subtitle>{{blogPost.author.username}} / {{blogPost.created|date:'medium'}}</mat-card-subtitle>

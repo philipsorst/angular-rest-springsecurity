@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" id="main-toolbar">
+    <app-sidenav-toggle></app-sidenav-toggle>
+    <h1>Authors</h1>
+</mat-toolbar>
+
+<mat-spinner class="ml-auto mr-auto mt-full" [diameter]="48" *ngIf="loading"></mat-spinner>
+
+<ng-container *ngIf="!loading">
+    <mat-card *ngFor="let user of users" class="m-full">
+        <mat-card-title>{{user.username}}</mat-card-title>
+        <mat-card-actions>
+            <a mat-button [routerLink]="['/authors', user.username]">Show</a>
+        </mat-card-actions>
+    </mat-card>
+</ng-container>

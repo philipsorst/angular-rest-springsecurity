@@ -3,35 +3,50 @@ import {RouterModule, Routes} from '@angular/router';
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {BlogPostListComponent} from "./blog-post/blog-post-list.component";
 import {BlogPostDetailComponent} from "./blog-post/blog-post-detail.component";
+import {UserListComponent} from "./user/user-list.component";
+import {UserDetailComponent} from "./user/user-detail.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/blog-posts',
-    pathMatch: 'full'
-  },
-  {
-    path: 'blog-posts',
-    children: [
-      {
+    {
         path: '',
-        component: BlogPostListComponent
-      },
-      {
-          path: ':slug',
-        component: BlogPostDetailComponent
-      }
-    ]
-  },
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
+        redirectTo: '/blog-posts',
+        pathMatch: 'full'
+    },
+    {
+        path: 'blog-posts',
+        children: [
+            {
+                path: '',
+                component: BlogPostListComponent
+            },
+            {
+                path: ':slug',
+                component: BlogPostDetailComponent
+            }
+        ]
+    },
+    {
+        path: 'authors',
+        children: [
+            {
+                path: '',
+                component: UserListComponent
+            },
+            {
+                path: ':username',
+                component: UserDetailComponent
+            }
+        ]
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule
 {

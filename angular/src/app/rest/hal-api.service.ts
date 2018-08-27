@@ -4,6 +4,7 @@ import {Sort} from "./sort";
 import {CollectionResult} from "./collection-result";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {Parameter} from "./parameter";
 
 export const REST_API_BASE = new InjectionToken<string>('rest-api-base');
 
@@ -31,19 +32,29 @@ export class HalApiService
         page: number = null,
         size: number = null,
         sort: Sort[] = null,
-        projection: string = null
+        projection: string = null,
+        additionalParameters: Parameter[] = null
     ): Observable<CollectionResult<T>>
     {
         let params = new HttpParams();
+        if (null != additionalParameters) {
+            additionalParameters.forEach((parameter: Parameter) => {
+                params = params.append(parameter.key, parameter.value);
+            });
+        }
+
         if (null != page) {
             params = params.append('page', String(page));
         }
+
         if (null != size) {
             params = params.append('size', String(size));
         }
+
         if (null != projection) {
             params = params.append('projection', projection);
         }
+
         if (null != sort) {
             sort.forEach((sort: Sort) => {
                 params = params.append('sort', sort.property + ',' + sort.direction)

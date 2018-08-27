@@ -30,7 +30,7 @@ public class BlogPosts implements Fixture
         for (int i = 0; i < 500; i++) {
             BlogPost blogPost = new BlogPost();
             blogPost.setAuthor(referenceRepository.retrieve("user-" + faker.number().numberBetween(0, 50)));
-            blogPost.setTitle(faker.lorem().sentence(faker.number().numberBetween(1, 6)));
+            blogPost.setTitle(faker.lorem().sentence(faker.number().numberBetween(3, 6)));
             blogPost.setSlug("blog-post-" + i);
             blogPost.setContent(StringUtils.join(
                     faker.lorem().paragraphs(faker.number().numberBetween(1, 11)),
@@ -50,10 +50,7 @@ public class BlogPosts implements Fixture
                 Comment comment = new Comment();
                 comment.setBlogPost(blogPost);
                 comment.setAuthor(referenceRepository.retrieve("user-" + faker.number().numberBetween(0, 50)));
-                comment.setContent(StringUtils.join(
-                        faker.lorem().paragraphs(faker.number().numberBetween(1, 4)),
-                        "\n\n"
-                ));
+                comment.setContent(faker.lorem().sentence(faker.number().numberBetween(3, 10)));
                 lastDate = faker.date().between(lastDate, now);
                 comment.setCreated(lastDate.getTime());
 

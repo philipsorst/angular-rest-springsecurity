@@ -15,6 +15,12 @@ public class User
     @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
     public Long getId()
     {
         return this.id;
@@ -28,5 +34,25 @@ public class User
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public String getFirstName()
+    {
+        return this.firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
     }
 }

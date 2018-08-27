@@ -20,6 +20,8 @@ import {
 import {HttpClientModule} from "@angular/common/http";
 import {SidenavToggleComponent} from "./sidenav/sidenav-toggle.component";
 import {REST_API_BASE} from "./rest/hal-api.service";
+import {UserListComponent} from "./user/user-list.component";
+import {UserDetailComponent} from "./user/user-detail.component";
 
 @NgModule({
     declarations: [
@@ -27,7 +29,9 @@ import {REST_API_BASE} from "./rest/hal-api.service";
         NotFoundComponent,
         BlogPostListComponent,
         BlogPostDetailComponent,
-        SidenavToggleComponent
+        SidenavToggleComponent,
+        UserListComponent,
+        UserDetailComponent
     ],
     imports: [
         BrowserModule,

@@ -3,16 +3,14 @@
     <h1 *ngIf="!loading && null != blogPost">{{blogPost.title}}</h1>
 </mat-toolbar>
 
-<mat-spinner class="ml-auto mr-auto" [diameter]="48" *ngIf="loading"></mat-spinner>
+<mat-spinner class="ml-auto mr-auto mt-auto" [diameter]="48" *ngIf="loading"></mat-spinner>
 
 <mat-card *ngIf="!loading && null != blogPost" class="m-full">
     {{blogPost.author.username}} / {{blogPost.created|date:'medium'}}
 </mat-card>
 
 <mat-card *ngIf="!loading && null != blogPost" class="m-full">
-    <mat-card-content class="nl2br">
-        {{blogPost.content}}
-    </mat-card-content>
+    <mat-card-content class="nl2br">{{blogPost.content}}</mat-card-content>
 </mat-card>
 
 <mat-card class="m-full"

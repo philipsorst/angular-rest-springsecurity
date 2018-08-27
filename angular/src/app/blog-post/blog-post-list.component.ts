@@ -15,7 +15,7 @@ export class BlogPostListComponent implements OnInit
 
     public blogPosts: BlogPost[];
 
-    constructor(private blogPostService: BlogPostService, private snackbar: MatSnackBar)
+    constructor(private blogPostService: BlogPostService, private snackBar: MatSnackBar)
     {
     }
 
@@ -30,7 +30,7 @@ export class BlogPostListComponent implements OnInit
                 this.blogPosts = result.entries;
             },
             (error) => {
-                this.snackbar.open('Could not load blog posts', 'OK');
+                this.snackBar.open('Could not load blog posts', 'OK');
             },
             () => {
                 this.loading = false;
