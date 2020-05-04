@@ -9,11 +9,7 @@ import javax.persistence.*
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Entity
-open class BlogPost {
-
-    @Id
-    @GeneratedValue
-    var id: Long? = null
+class BlogPost : BaseEntity<Long>() {
 
     @Basic(optional = false)
     var title: String? = null
@@ -25,7 +21,7 @@ open class BlogPost {
     @Column(nullable = false)
     var content: String? = null
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @CreatedBy
     var author: User? = null
 
@@ -38,5 +34,5 @@ open class BlogPost {
     var updated: Long? = null
 
     @OneToMany(mappedBy = "blogPost")
-    var comments: Collection<Comment>? = null
+    var comments: MutableCollection<Comment>? = null
 }

@@ -8,11 +8,7 @@ import javax.persistence.*
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Entity
-class Comment {
-
-    @Id
-    @GeneratedValue
-    var id: Long? = null
+class Comment : BaseEntity<Long>() {
 
     @ManyToOne(optional = false)
     var blogPost: BlogPost? = null

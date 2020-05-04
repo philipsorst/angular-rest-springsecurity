@@ -1,16 +1,14 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity
 
-import javax.persistence.*
+import javax.persistence.Basic
+import javax.persistence.Column
+import javax.persistence.Entity
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Entity
-open class User {
-
-    @Id
-    @GeneratedValue
-    var id: Long? = null
+class User : BaseEntity<Long>() {
 
     @Column(nullable = false, unique = true)
     var username: String? = null
