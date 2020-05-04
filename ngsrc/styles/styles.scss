@@ -15,14 +15,24 @@ body {
 
 $app-toolbar-height: 56px;
 $app-toolbar-height-lg: 64px;
-$app-fab-height: 64px;
-$app-fab-padding: 88px;
+$app-fab-height: 56px;
+$app-fab-padding: 16px;
+$app-fab-total-height: $app-fab-height + (2 * $app-fab-padding);
+
+.mat-fab {
+    position: fixed !important;
+    right: 0;
+    bottom: 0;
+    margin-right: 1rem !important;
+    margin-bottom: 1rem !important;
+    z-index: 2;
+}
 
 .mat-sidenav-content {
 
     padding-top: $app-toolbar-height;
-    padding-bottom: (88px + 64px);
-    min-height: calc(100vh - (#{$app-toolbar-height} + 88px + 64px));
+    padding-bottom: $app-fab-total-height;
+    min-height: calc(100vh - (#{$app-toolbar-height} + #{$app-fab-total-height}));
 
     .mat-toolbar {
         position: fixed;
@@ -40,7 +50,7 @@ $app-fab-padding: 88px;
 @include media-breakpoint-up(sm, $grid-breakpoints) {
     .mat-sidenav-content {
         padding-top: $app-toolbar-height-lg;
-        min-height: calc(100vh - (#{$app-toolbar-height-lg} + 88px + 64px));
+        min-height: calc(100vh - (#{$app-toolbar-height-lg} + #{$app-fab-total-height}));
     }
 }
 
