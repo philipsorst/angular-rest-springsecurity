@@ -1,8 +1,5 @@
-*.iml
 /.idea/
-/.settings
-/target
-/.classpath
-/.project
-/angular/node_modules
-/src/main/resources/public/*
+*.iml
+/target/
+/node_modules
+/src/main/resources/public/

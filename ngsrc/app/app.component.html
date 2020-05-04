@@ -1,0 +1,20 @@
+<mat-sidenav-container [ngClass]="{'screen-large': (screenLarge$ | async)}">
+    <mat-sidenav
+        #sidenav
+        [fixedInViewport]="true"
+        [mode]="(screenLarge$ | async) ? 'side' : 'over'"
+        [opened]="screenLarge$ | async"
+    >
+        <mat-toolbar color="primary">
+            <h1>Spring-Boot-Rest Example</h1>
+        </mat-toolbar>
+
+        <mat-nav-list>
+            <a mat-list-item routerLink="/blog-posts" (click)="conditionalSidenavToggle()">Blog posts</a>
+            <a mat-list-item routerLink="/authors" (click)="conditionalSidenavToggle()">Authors</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>

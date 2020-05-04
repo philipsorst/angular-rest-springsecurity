@@ -1,0 +1,15 @@
+spring:
+    devtools:
+        restart:
+            enabled: false
+    datasource:
+        url: jdbc:mysql://localhost:3306/gh_ps_exspringbootrest?serverTimezone=UTC
+        username: localuser
+        password: localpassword
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect

@@ -1,0 +1,65 @@
+@import '~bootstrap/scss/functions';
+
+$white: #fff !default;
+$gray-100: #F5F5F5 !default;
+$gray-200: #EEEEEE !default;
+$gray-300: #E0E0E0 !default;
+$gray-400: #BDBDBD !default;
+$gray-500: #9E9E9E !default;
+$gray-600: #757575 !default;
+$gray-700: #616161 !default;
+$gray-800: #424242 !default;
+$gray-900: #212121 !default;
+$black: #000 !default;
+
+$red: #F44336 !default;
+$green: #4CAF50 !default;
+
+$body-color: #fafafa !default;
+$text-muted: $gray-500 !default;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 600px,
+        md: 960px,
+        lg: 1280px,
+        xl: 1920px
+) !default;
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px
+) !default;
+
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+$font-family-monospace: "Roboto Mono", monospace !default;
+
+$grid-gutter-width: 1rem !default;
+
+@import '~bootstrap/scss/variables';
+
+@import '~bootstrap/scss/mixins/breakpoints';
+@import "~bootstrap/scss/mixins/hover";
+@import '~bootstrap/scss/mixins/screen-reader';
+@import '~bootstrap/scss/mixins/text-truncate';
+@import "~bootstrap/scss/mixins/text-emphasis";
+@import '~bootstrap/scss/mixins/text-hide';
+@import '~bootstrap/scss/mixins/deprecate';
+@import '~bootstrap/scss/mixins/grid-framework';
+@import '~bootstrap/scss/mixins/grid';
+
+@import '~bootstrap/scss/utilities/display';
+@import '~bootstrap/scss/utilities/flex';
+@import '~bootstrap/scss/utilities/float';
+@import '~bootstrap/scss/utilities/position';
+@import '~bootstrap/scss/utilities/screenreaders';
+@import '~bootstrap/scss/utilities/sizing';
+@import '~bootstrap/scss/utilities/spacing';
+@import '~bootstrap/scss/utilities/text';
+@import '~bootstrap/scss/utilities/align';
+@import '~bootstrap/scss/utilities/visibility';
+
+@import '~bootstrap/scss/grid';
