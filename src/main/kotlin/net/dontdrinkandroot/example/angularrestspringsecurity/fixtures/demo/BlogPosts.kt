@@ -25,7 +25,7 @@ class BlogPosts : Fixture {
             blogPost.created = blogPost.updated!! - faker.number().numberBetween(0, 1000L * 60 * 60 * 24 * 365)
             blogPost.title = faker.lorem().sentence()
             blogPost.slug = "blog-post-$i"
-            blogPost.content = faker.lorem().paragraphs(5).joinToString(separator = "\n\n")
+            blogPost.content = faker.lorem().paragraphs(faker.number().numberBetween(1, 11)).joinToString(separator = "\n\n")
             entityManager.persist(blogPost)
 
             val numComments = faker.number().numberBetween(0, 30)
@@ -33,8 +33,8 @@ class BlogPosts : Fixture {
                 val comment = Comment()
                 comment.author = getRandomUser(referenceRepository, faker)
                 comment.blogPost = blogPost
-                comment.createdTimestamp = faker.number().numberBetween(blogPost.created!!, System.currentTimeMillis())
-                comment.content = faker.lorem().paragraphs(5).joinToString(separator = "\n\n")
+                comment.created = faker.number().numberBetween(blogPost.created!!, System.currentTimeMillis())
+                comment.content = faker.lorem().paragraphs(faker.number().numberBetween(1, 4)).joinToString(separator = "\n")
                 entityManager.persist(comment)
             }
         }

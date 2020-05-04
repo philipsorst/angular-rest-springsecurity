@@ -1,84 +1,57 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {BlogPost} from "../blog-post/blog-post";
-import {Subscription} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {BlogPostService} from "../blog-post/blog-post.service";
 import {UserService} from "./user.service";
 import {User} from "./user";
-import {CollectionResult} from "../rest/collection-result";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {catchError, map, switchMap} from "rxjs/operators";
 
 @Component({
     templateUrl: './user-detail.component.html'
 })
-export class UserDetailComponent implements OnInit, OnDestroy
-{
-    public loading: boolean = false;
+export class UserDetailComponent implements OnInit {
 
-    public blogPostsLoading: boolean = false;
+    public user$: Observable<User>;
 
-    public user: User;
-
-    public blogPosts: Array<BlogPost>;
-
-    private routeParamsSubscription: Subscription;
+    public blogPosts$: Observable<BlogPost[]>;
 
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
         private blogPostService: BlogPostService,
         private snackBar: MatSnackBar
-    )
-    {
+    ) {
     }
 
     /**
      * @override
      */
-    public ngOnInit()
-    {
-        this.loading = true;
-        this.blogPostsLoading = true;
-        this.routeParamsSubscription = this.route.params.subscribe((params) => {
-            this.loading = true;
-            this.userService.find(params.username, 'detail').subscribe(
-                (user: User) => {
-                    this.user = user;
-                },
-                (error) => {
-                    this.snackBar.open('Could not load author', 'OK');
-                },
-                () => {
-                    this.loading = false;
-                }
-            );
+    public ngOnInit() {
+        this.user$ = this.route.params.pipe(
+            map(params => params.username),
+            switchMap(username => this.userService.find(username, 'detail')),
+            catchError(error => {
+                this.snackBar.open('Could not load author', 'OK');
+                return throwError(error);
+            })
+        );
 
-            this.blogPostsLoading = true;
-            this.blogPostService.query(
+        this.blogPosts$ = this.route.params.pipe(
+            map(params => params.username),
+            switchMap(username => this.blogPostService.query(
                 'author',
-                [{key: 'name', value: params.username}],
+                [{key: 'name', value: username}],
                 0,
                 null,
                 [{property: 'created', direction: 'DESC'}]
-            ).subscribe(
-                (blogPosts: CollectionResult<BlogPost>) => {
-                    this.blogPosts = blogPosts.entries;
-                },
-                (error) => {
-                    this.snackBar.open('Could not load blog posts', 'OK');
-                },
-                () => {
-                    this.blogPostsLoading = false;
-                }
-            )
-        })
-    }
-
-    /**
-     * @override
-     */
-    public ngOnDestroy()
-    {
-        this.routeParamsSubscription.unsubscribe();
+            )),
+            catchError(error => {
+                this.snackBar.open('Could not load blog posts', 'OK');
+                return throwError(error);
+            }),
+            map(result => result.entries)
+        );
     }
 }

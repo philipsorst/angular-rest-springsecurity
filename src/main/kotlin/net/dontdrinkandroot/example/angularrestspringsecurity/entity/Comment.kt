@@ -19,7 +19,7 @@ class Comment : BaseEntity<Long>() {
 
     @Basic(optional = false)
     @CreatedDate
-    var createdTimestamp: Long? = null
+    var created: Long? = null
 
     @Lob
     @Column(nullable = false)

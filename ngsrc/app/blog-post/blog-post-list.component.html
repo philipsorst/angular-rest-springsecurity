@@ -3,12 +3,15 @@
     <h1>Blog Posts</h1>
 </mat-toolbar>
 
-<mat-spinner class="ml-auto mr-auto mt-full" [diameter]="48" *ngIf="loading"></mat-spinner>
+<ng-template #loading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
 
-<ng-container *ngIf="!loading">
-    <mat-card *ngFor="let blogPost of blogPosts" class="m-full">
+<ng-container *ngIf="blogPosts$ | async as blogPosts; else loading">
+    <mat-card *ngFor="let blogPost of blogPosts" class="mb-2">
         <mat-card-title>{{blogPost.title}}</mat-card-title>
-        <mat-card-subtitle>{{blogPost.author.username}} / {{blogPost.created|date:'medium'}}</mat-card-subtitle>
+        <mat-card-subtitle>{{blogPost.author.firstName}} {{blogPost.author.lastName}}
+            / {{blogPost.created|date:'medium'}}</mat-card-subtitle>
         <mat-card-actions>
             <a mat-button [routerLink]="['/blog-posts', blogPost.slug]">Read</a>
         </mat-card-actions>

@@ -13,6 +13,37 @@ body {
     width: 300px;
 }
 
-.screen-large app-sidenav-toggle {
-    display: none;
+$app-toolbar-height: 56px;
+$app-toolbar-height-lg: 64px;
+$app-fab-height: 64px;
+$app-fab-padding: 88px;
+
+.mat-sidenav-content {
+
+    padding-top: $app-toolbar-height;
+    padding-bottom: (88px + 64px);
+    min-height: calc(100vh - (#{$app-toolbar-height} + 88px + 64px));
+
+    .mat-toolbar {
+        position: fixed;
+        top: 0;
+        z-index: 2;
+    }
+}
+
+.screen-large {
+    app-sidenav-toggle {
+        display: none;
+    }
+}
+
+@include media-breakpoint-up(sm, $grid-breakpoints) {
+    .mat-sidenav-content {
+        padding-top: $app-toolbar-height-lg;
+        min-height: calc(100vh - (#{$app-toolbar-height-lg} + 88px + 64px));
+    }
+}
+
+.nl2br {
+    white-space: pre-wrap;
 }

@@ -1,22 +1,31 @@
-<mat-toolbar color="primary" id="main-toolbar">
-    <app-sidenav-toggle></app-sidenav-toggle>
-    <h1 *ngIf="!loading && null != blogPost">{{blogPost.title}}</h1>
-</mat-toolbar>
+<ng-template #loading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
 
-<mat-spinner class="ml-auto mr-auto mt-auto" [diameter]="48" *ngIf="loading"></mat-spinner>
+<ng-container *ngIf="blogPost$ | async as blogPost; else loading">
 
-<mat-card *ngIf="!loading && null != blogPost" class="m-full">
-    {{blogPost.author.username}} / {{blogPost.created|date:'medium'}}
-</mat-card>
+    <mat-toolbar color="primary" id="main-toolbar">
+        <app-sidenav-toggle></app-sidenav-toggle>
+        <h1>{{blogPost.title}}</h1>
+    </mat-toolbar>
 
-<mat-card *ngIf="!loading && null != blogPost" class="m-full">
-    <mat-card-content class="nl2br">{{blogPost.content}}</mat-card-content>
-</mat-card>
+    <mat-card class="mb-2">
+        {{blogPost.author.firstName}} {{blogPost.author.lastName}} / {{blogPost.created|date:'medium'}}
+    </mat-card>
 
-<mat-card class="m-full"
-          *ngIf="!loading && null != blogPost && null != blogPost.comments && blogPost.comments.length > 0">
-    <mat-card-title>Comments</mat-card-title>
-    <mat-list>
-        <mat-list-item *ngFor="let comment of blogPost.comments" class="nl2br">{{comment.content}}</mat-list-item>
-    </mat-list>
-</mat-card>
+    <mat-card class="mb-2">
+        <mat-card-content class="nl2br">{{blogPost.content}}</mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="null != blogPost.comments && blogPost.comments.length > 0">
+        <mat-card-title>Comments</mat-card-title>
+        <ng-container *ngFor="let comment of blogPost.comments; last as last">
+            <div class="py-2">
+                <div class="mat-small">{{comment.created|date:'medium'}}</div>
+                <div class="nl2br">{{comment.content}}</div>
+            </div>
+            <mat-divider *ngIf="!last"></mat-divider>
+        </ng-container>
+    </mat-card>
+
+</ng-container>

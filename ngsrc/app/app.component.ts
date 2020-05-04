@@ -18,20 +18,25 @@ export class AppComponent implements OnInit {
     constructor(private sidenavService: SidenavService, private breakpointObserver: BreakpointObserver) {
     }
 
+    private readonly largeBreakpoints = [
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+    ];
+
     /**
      * @override
      */
     public ngOnInit(): void {
         this.sidenavService.setSidenav(this.sidenav);
-        this.screenLarge$ = this.breakpointObserver.observe([
-            Breakpoints.Medium,
-            Breakpoints.Large,
-            Breakpoints.XLarge
-        ]).pipe(map(result => result.matches));
+        this.screenLarge$ = this.breakpointObserver
+            .observe(this.largeBreakpoints)
+            .pipe(map(result => result.matches));
     }
 
-    public conditionalSidenavToggle()
-    {
-        this.sidenav.close();
+    public conditionalSidenavToggle() {
+        if (!this.breakpointObserver.isMatched(this.largeBreakpoints)) {
+            this.sidenav.close();
+        }
     }
 }

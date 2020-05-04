@@ -3,11 +3,13 @@
     <h1>Authors</h1>
 </mat-toolbar>
 
-<mat-spinner class="ml-auto mr-auto mt-full" [diameter]="48" *ngIf="loading"></mat-spinner>
+<ng-template #loading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
 
-<ng-container *ngIf="!loading">
-    <mat-card *ngFor="let user of users" class="m-full">
-        <mat-card-title>{{user.username}}</mat-card-title>
+<ng-container *ngIf="users$ | async as users; else loading">
+    <mat-card *ngFor="let user of users" class="mb-2">
+        <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
         <mat-card-actions>
             <a mat-button [routerLink]="['/authors', user.username]">Show</a>
         </mat-card-actions>

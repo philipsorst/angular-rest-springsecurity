@@ -1,12 +1,18 @@
-<mat-toolbar color="primary" id="main-toolbar">
+<ng-template #userLoading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
+
+<ng-template #blogPostsLoading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
+
+<mat-toolbar color="primary" id="main-toolbar" *ngIf="user$ | async as user; else userLoading">
     <app-sidenav-toggle></app-sidenav-toggle>
-    <h1 *ngIf="!loading && null != user">{{user.username}}</h1>
+    <h1>{{user.firstName}} {{user.lastName}}</h1>
 </mat-toolbar>
 
-<mat-spinner class="ml-auto mr-auto mt-auto" [diameter]="48" *ngIf="loading || blogPostsLoading"></mat-spinner>
-
-<ng-container *ngIf="!blogPostsLoading">
-    <mat-card *ngFor="let blogPost of blogPosts" class="m-full">
+<ng-container *ngIf="blogPosts$ | async as blogPosts; else blogPostsLoading">
+    <mat-card *ngFor="let blogPost of blogPosts" class="mb-2">
         <mat-card-title>{{blogPost.title}}</mat-card-title>
         <mat-card-subtitle>{{blogPost.author.username}} / {{blogPost.created|date:'medium'}}</mat-card-subtitle>
         <mat-card-actions>
