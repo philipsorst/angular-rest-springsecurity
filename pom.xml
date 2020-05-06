@@ -122,6 +122,35 @@
         </plugins>
     </build>
 
+    <profiles>
+
+        <profile>
+            <id>skip-angular-build</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>yarn install</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>angular-cli build</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
     <dependencies>
 
         <dependency>

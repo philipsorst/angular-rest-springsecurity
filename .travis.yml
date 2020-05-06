@@ -8,4 +8,4 @@ cache:
   - "$HOME/.m2/repository"
 
 script:
-  - mvn clean test
+  - mvn clean test -P skip-angular-build
