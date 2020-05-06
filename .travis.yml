@@ -1,11 +1,14 @@
 language: java
 
 jdk:
-- openjdk11
+    - openjdk11
 
 cache:
-  directories:
-  - "$HOME/.m2/repository"
+    directories:
+        - "$HOME/.m2/repository"
+
+install:
+    - echo Skipping install step
 
 script:
-  - mvn clean test -P skip-angular-build
+    - mvn clean test -P skip-angular-build
