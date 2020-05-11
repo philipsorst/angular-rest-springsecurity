@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity
 
+import org.springframework.data.annotation.ReadOnlyProperty
 import org.springframework.data.util.ProxyUtils
 import java.io.Serializable
 import javax.persistence.GeneratedValue
@@ -14,6 +15,7 @@ abstract class BaseEntity<T : Serializable> : Serializable {
 
     @Id
     @GeneratedValue
+    @ReadOnlyProperty
     var id: T? = null
         protected set
 

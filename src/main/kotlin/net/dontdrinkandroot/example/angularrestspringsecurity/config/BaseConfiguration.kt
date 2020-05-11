@@ -35,8 +35,7 @@ class BaseConfiguration {
 //            val serializers = SimpleSerializers()
 //            val deserializers = SimpleDeserializers()
 //
-//            serializers.addSerializer(MyEntity::class.java, MyEntitySerializer())
-//            deserializers.addDeserializer(MyEntity::class.java, MyEntityDeserializer())
+//            serializers.addSerializer(BlogPost::class.java, ExampleSerializer())
 //
 //            context.addSerializers(serializers)
 //            context.addDeserializers(deserializers)

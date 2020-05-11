@@ -20,6 +20,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {BlogPostEditComponent} from "./blog-post/blog-post-edit.component";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
     declarations: [
@@ -27,6 +29,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         NotFoundComponent,
         BlogPostListComponent,
         BlogPostDetailComponent,
+        BlogPostEditComponent,
         SidenavToggleComponent,
         UserListComponent,
         UserDetailComponent
@@ -43,7 +46,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatIconModule,
         MatProgressSpinnerModule,
         MatButtonModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatMenuModule
     ],
     providers: [
         {provide: REST_API_BASE, useValue: 'http://localhost:8080/api/'}

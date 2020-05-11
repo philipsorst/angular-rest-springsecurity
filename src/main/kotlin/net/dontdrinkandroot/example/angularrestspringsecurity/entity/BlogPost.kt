@@ -3,6 +3,7 @@ package net.dontdrinkandroot.example.angularrestspringsecurity.entity
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.annotation.ReadOnlyProperty
 import javax.persistence.*
 
 /**
@@ -23,14 +24,17 @@ class BlogPost : BaseEntity<Long>() {
 
     @ManyToOne(optional = false)
     @CreatedBy
+    @ReadOnlyProperty
     var author: User? = null
 
     @Basic(optional = false)
     @CreatedDate
+    @ReadOnlyProperty
     var created: Long? = null
 
     @Basic(optional = false)
     @LastModifiedDate
+    @ReadOnlyProperty
     var updated: Long? = null
 
     @OneToMany(mappedBy = "blogPost")

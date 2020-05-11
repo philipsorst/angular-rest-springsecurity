@@ -28,6 +28,10 @@ $app-fab-total-height: $app-fab-height + (2 * $app-fab-padding);
     z-index: 2;
 }
 
+.mat-drawer {
+    width: 300px;
+}
+
 .mat-sidenav-content {
 
     padding-top: $app-toolbar-height;

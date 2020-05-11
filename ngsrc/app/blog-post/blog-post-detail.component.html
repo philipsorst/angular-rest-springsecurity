@@ -6,8 +6,17 @@
 
     <mat-toolbar color="primary" id="main-toolbar">
         <app-sidenav-toggle></app-sidenav-toggle>
-        <h1>{{blogPost.title}}</h1>
+        <h1 class="mr-auto">{{blogPost.title}}</h1>
+        <button mat-icon-button [matMenuTriggerFor]="optionsMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
     </mat-toolbar>
+
+    <mat-menu #optionsMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/blog-posts',blogPost.slug]">
+            Edit
+        </button>
+    </mat-menu>
 
     <mat-card class="mb-2">
         {{blogPost.author.firstName}} {{blogPost.author.lastName}} / {{blogPost.created|date:'medium'}}

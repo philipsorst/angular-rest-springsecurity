@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.example.angularrestspringsecurity.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Basic
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -13,6 +14,7 @@ class User : BaseEntity<Long>() {
     @Column(nullable = false, unique = true)
     var username: String? = null
 
+    @JsonIgnore
     @Column(nullable = false)
     var password: String? = null
 

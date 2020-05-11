@@ -5,6 +5,7 @@ import {BlogPostListComponent} from "./blog-post/blog-post-list.component";
 import {BlogPostDetailComponent} from "./blog-post/blog-post-detail.component";
 import {UserListComponent} from "./user/user-list.component";
 import {UserDetailComponent} from "./user/user-detail.component";
+import {BlogPostEditComponent} from "./blog-post/blog-post-edit.component";
 
 const routes: Routes = [
     {
@@ -21,8 +22,17 @@ const routes: Routes = [
             },
             {
                 path: ':slug',
-                component: BlogPostDetailComponent
-            }
+                children: [
+                    {
+                        path: '',
+                        component: BlogPostDetailComponent
+                    },
+                    {
+                        path: 'edit',
+                        component: BlogPostEditComponent
+                    }
+                ]
+            },
         ]
     },
     {
@@ -39,6 +49,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'user',
+        children: [
+            {
+                path: 'create-blog-post',
+                component: BlogPostEditComponent
+            }
+        ]
+    },
+    {
         path: '**',
         component: NotFoundComponent
     }
@@ -48,6 +67,5 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule
-{
+export class AppRoutingModule {
 }

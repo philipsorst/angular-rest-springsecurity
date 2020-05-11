@@ -1,0 +1,31 @@
+<ng-template #loading>
+    <mat-spinner class="mx-auto my-2" [diameter]="48"></mat-spinner>
+</ng-template>
+
+<!--<ng-container *ngIf="blogPost$ | async as blogPost; else loading">-->
+
+<!--    <mat-toolbar color="primary" id="main-toolbar">-->
+<!--        <app-sidenav-toggle></app-sidenav-toggle>-->
+<!--        <h1>Edit Blog post-->
+<!--    </mat-toolbar>-->
+
+<!--    <mat-card class="mb-2">-->
+<!--        {{blogPost.author.firstName}} {{blogPost.author.lastName}} / {{blogPost.created|date:'medium'}}-->
+<!--    </mat-card>-->
+
+<!--    <mat-card class="mb-2">-->
+<!--        <mat-card-content class="nl2br">{{blogPost.content}}</mat-card-content>-->
+<!--    </mat-card>-->
+
+<!--    <mat-card *ngIf="null != blogPost.comments && blogPost.comments.length > 0">-->
+<!--        <mat-card-title>Comments</mat-card-title>-->
+<!--        <ng-container *ngFor="let comment of blogPost.comments; last as last">-->
+<!--            <div class="py-2">-->
+<!--                <div class="mat-small">{{comment.created|date:'medium'}}</div>-->
+<!--                <div class="nl2br">{{comment.content}}</div>-->
+<!--            </div>-->
+<!--            <mat-divider *ngIf="!last"></mat-divider>-->
+<!--        </ng-container>-->
+<!--    </mat-card>-->
+
+<!--</ng-container>-->
