@@ -5,6 +5,7 @@ import {CollectionResult} from "./collection-result";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Parameter} from "./parameter";
+import {HalResource} from "./hal-resource";
 
 export const REST_API_BASE = new InjectionToken<string>('rest-api-base');
 
@@ -85,6 +86,16 @@ export class HalApiService
 
             return result;
         }))
+    }
+
+    public post<T>(url: string, resource: T)
+    {
+        return this.getHttpClient().post<T>(url, resource);
+    }
+
+    public put<T>(resource: T | HalResource)
+    {
+        return this.getHttpClient().put<T>((resource as HalResource)._links.self.href, resource);
     }
 
     public getSingleResult<T>(url: string, projection: string = null): Observable<T>

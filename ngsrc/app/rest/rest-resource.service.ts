@@ -3,11 +3,31 @@ import {Observable} from "rxjs";
 import {Sort} from "./sort";
 import {HalApiService} from "./hal-api.service";
 import {Parameter} from "./parameter";
+import {HalResource} from "./hal-resource";
 
 export class RestResourceService<T>
 {
     constructor(protected halApiService: HalApiService, protected endpoint: string)
     {
+    }
+
+    public save(resource: T): Observable<T>
+    {
+        if (resource.hasOwnProperty('_links')) {
+            return this.update(resource);
+        }
+
+        return this.create(resource);
+    }
+
+    public create(resource: T): Observable<T>
+    {
+        return this.halApiService.post(this.getBasePath(), resource);
+    }
+
+    public update(resource: T | HalResource): Observable<T>
+    {
+        return this.halApiService.put(resource);
     }
 
     public list(
@@ -18,7 +38,7 @@ export class RestResourceService<T>
     ): Observable<CollectionResult<T>>
     {
         return this.halApiService.getCollectionResult<T>(
-            this.halApiService.getRestApiBase() + this.endpoint, page, size, sort, projection
+            this.getBasePath(), page, size, sort, projection
         );
     }
 
@@ -30,17 +50,22 @@ export class RestResourceService<T>
         sort: Sort[] = null,
     ): Observable<CollectionResult<T>>
     {
-        let url = this.halApiService.getRestApiBase() + this.endpoint + '/search/' + method;
+        let url = this.getBasePath() + '/search/' + method;
 
         return this.halApiService.getCollectionResult<T>(
             url, page, size, sort, null, parameters
         );
     }
 
+    private getBasePath()
+    {
+        return this.halApiService.getRestApiBase() + this.endpoint;
+    }
+
     public find(id: any, projection: string = null): Observable<T>
     {
         return this.halApiService.getSingleResult<T>(
-            this.halApiService.getRestApiBase() + this.endpoint + '/' + id, projection
+            this.getBasePath() + '/' + id, projection
         );
     }
 }

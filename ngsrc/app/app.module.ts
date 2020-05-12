@@ -22,6 +22,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BlogPostEditComponent} from "./blog-post/blog-post-edit.component";
 import {MatMenuModule} from "@angular/material/menu";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
     declarations: [
@@ -38,9 +41,12 @@ import {MatMenuModule} from "@angular/material/menu";
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
+        FormsModule,
         BrowserAnimationsModule,
         MatSidenavModule,
         MatListModule,
+        MatInputModule,
+        MatFormFieldModule,
         MatToolbarModule,
         MatCardModule,
         MatIconModule,

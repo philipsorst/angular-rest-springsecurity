@@ -4,14 +4,24 @@ import org.springframework.data.rest.core.config.Projection
 
 @Projection(name = "list", types = [BlogPost::class])
 interface BlogPostListProjection {
+
     val title: String
     val author: User
     val created: Long
     val slug: String
 }
 
+@Projection(name = "edit", types = [BlogPost::class])
+interface BlogPostEditProjection {
+
+    val title: String
+    val slug: String
+    val content: String
+}
+
 @Projection(name = "detail", types = [BlogPost::class])
 interface BlogPostDetailProjection {
+
     val title: String
     val author: User
     val created: Long

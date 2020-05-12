@@ -20,4 +20,6 @@ interface BlogPostRepository : JpaRepository<BlogPost, Long> {
 
     @RestResource(path = "author", rel = "author")
     fun findByAuthorUsername(@Param("name") username: String, pageable: Pageable): Page<BlogPost>
+
+    fun save(blogPost: BlogPost): BlogPost
 }
